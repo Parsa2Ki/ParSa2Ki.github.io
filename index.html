@@ -1,166 +1,1101 @@
 <!DOCTYPE html>
-<html lang="fa-IR" dir="rtl">
-
+<html lang="fa" dir="rtl">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="In WebSite [2Ki Resume] Tavasot ParSa 2Ki Sakhte Shode !">
-    <meta name="author" content="Devcrud">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ParSa 2Ki</title>
-    <!-- font icons -->
-    <link rel="shortcut icon" href="assets/imgs/2Ki.jpg" type="image/x-icon">
-    <!-- Bootstrap + LeadMark main styles -->
-    <link rel="stylesheet" href="assets/css/Style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00d4aa;
+            --primary-dark: #00a884;
+            --bg-dark: #0a0f0d;
+            --bg-section: #111916;
+            --bg-card: #1a211e;
+            --text-light: #ffffff;
+            --text-gray: #b0b8b5;
+            --border: rgba(0, 212, 170, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        @font-face {
+            font-family: 'unixel';
+            src: url('unixel-Regular.ttf');
+        }
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'unixel', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* Header Component */
+        .section-header {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            position: relative;
+        }
+        
+        .header-bar {
+            background: linear-gradient(90deg, transparent 0%, var(--primary) 20%, var(--primary-dark) 50%, var(--primary) 80%, transparent 100%);
+            height: 4px;
+            width: 90%;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+            border-radius: 2px;
+            position: relative;
+        }
+        
+        .header-bar::before,
+        .header-bar::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--primary);
+        }
+        
+        .header-bar::before { left: 0; }
+        .header-bar::after { right: 0; }
+        
+        .title-wrapper {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: linear-gradient(135deg, rgba(0, 212, 170, 0.1) 0%, rgba(0, 168, 132, 0.1) 100%);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            border: 2px solid var(--border);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .title-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 212, 170, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .section-title {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: linear-gradient(to bottom, #fff 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .title-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 212, 170, 0.4), inset 0 2px 4px rgba(255,255,255,0.3);
+            position: relative;
+            z-index: 1;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(0, 212, 170, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 6px 30px rgba(0, 212, 170, 0.6); }
+        }
+        
+        .section-subtitle {
+            color: var(--primary);
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+            margin-top: 1rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+        
+        /* Introduction Section */
+        .intro-section {
+            padding: 2rem 1rem;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-section) 100%);
+        }
+        
+        .intro-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        @media (max-width: 900px) {
+            .intro-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+        }
+        
+        .intro-content h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary) 0%, #00ffcc 50%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            text-shadow: 0 0 30px rgba(0, 212, 170, 0.3);
+        }
+        
+        .role-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, rgba(0, 212, 170, 0.2) 0%, rgba(0, 168, 132, 0.2) 100%);
+            border: 1px solid var(--border);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .skills-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+        
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+        }
+        
+        .skill-item:last-child { border-bottom: none; }
+        
+        .skill-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
+        }
+        
+        .bio-card {
+            background: linear-gradient(135deg, rgba(0, 212, 170, 0.1) 0%, rgba(0, 168, 132, 0.05) 100%);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bio-card::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            font-size: 6rem;
+            color: var(--primary);
+            opacity: 0.2;
+            font-family: serif;
+        }
+        
+        .bio-card p {
+            line-height: 2;
+            color: var(--text-gray);
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .profile-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .profile-ring {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+            opacity: 0.3;
+        }
+        
+        .profile-ring:nth-child(2) {
+            width: 380px;
+            height: 380px;
+            animation-direction: reverse;
+            animation-duration: 25s;
+            border-style: dashed;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary);
+            box-shadow: 0 0 60px rgba(0, 212, 170, 0.4), inset 0 0 60px rgba(0,0,0,0.5);
+            filter: grayscale(100%) contrast(1.1);
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 2;
+        }
+        
+        @media (max-width: 600px) {
+            .profile-image {
+                width: 220px;
+                height: 220px;
+            }
+            .profile-ring {
+                width: 250px;
+                height: 250px;
+            }
+            .profile-ring:nth-child(2) {
+                width: 280px;
+                height: 280px;
+            }
+        }
+        
+        .profile-image:hover {
+            filter: grayscale(0%) contrast(1);
+            transform: scale(1.05);
+            box-shadow: 0 0 80px rgba(0, 212, 170, 0.6);
+        }
+        
+        /* Account Section */
+        .account-section {
+            padding: 2rem 1rem;
+            background: var(--bg-section);
+        }
+        
+        .account-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        @media (max-width: 900px) {
+            .account-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+        
+        .telegram-card {
+            background: linear-gradient(145deg, #161b19 0%, #0f1412 100%);
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(0, 212, 170, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .telegram-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+        
+        .tg-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .tg-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #0088cc 0%, #00a8e8 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 136, 204, 0.4);
+        }
+        
+        .tg-title h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .tg-title span {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+        
+        .tg-content {
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tg-content strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tg-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(90deg, rgba(0, 212, 170, 0.2) 0%, rgba(0, 168, 132, 0.2) 100%);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        
+        .tg-btn:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 212, 170, 0.4);
+        }
+        
+        .about-content h3 {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .about-content p {
+            color: var(--text-gray);
+            line-height: 2;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+        }
+        
+        .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        /* Portfolio Section */
+        .portfolio-section {
+            padding: 2rem 1rem;
+            background: linear-gradient(180deg, var(--bg-section) 0%, var(--bg-dark) 100%);
+        }
+        
+        .portfolio-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            padding: 2rem;
+        }
+        
+        @media (max-width: 1024px) {
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 1rem;
+            }
+        }
+        
+        .portfolio-item {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            cursor: pointer;
+            group: true;
+        }
+        
+        .portfolio-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(0, 212, 170, 0.1) 50%, transparent 70%);
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        .portfolio-item:hover::before {
+            opacity: 1;
+        }
+        
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .portfolio-tag {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--bg-dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            width: fit-content;
+        }
+        
+        .portfolio-overlay h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        
+        .portfolio-overlay p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            padding: 2rem 1rem 4rem;
+            background: var(--bg-dark);
+        }
+        
+        .contact-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        @media (max-width: 900px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .logo-hex {
+            width: 280px;
+            height: 320px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @media (max-width: 600px) {
+            .logo-hex {
+                width: 220px;
+                height: 260px;
+            }
+        }
+        
+        .hex-border {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            animation: rotate 10s linear infinite;
+        }
+        
+        .hex-inner {
+            position: absolute;
+            inset: 4px;
+            background: linear-gradient(145deg, #1a211e 0%, #0f1412 100%);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+        
+        .hex-text {
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(to bottom, #fff 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+        
+        .hex-sub {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-top: 0.5rem;
+            letter-spacing: 0.2em;
+        }
+        
+        @media (max-width: 600px) {
+            .hex-text { font-size: 3.5rem; }
+            .hex-sub { font-size: 1rem; }
+        }
+        
+        .contact-info h3 {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .contact-desc {
+            color: var(--text-gray);
+            line-height: 2;
+            margin-bottom: 2rem;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+        }
+        
+        .contact-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+        
+        @media (max-width: 900px) {
+            .contact-item {
+                justify-content: center;
+            }
+        }
+        
+        .contact-item:hover {
+            transform: translateX(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 5px 20px rgba(0, 212, 170, 0.2);
+        }
+        
+        .contact-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, rgba(0, 212, 170, 0.2) 0%, rgba(0, 168, 132, 0.2) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .contact-text {
+            font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+            color: var(--text-light);
+        }
+        
+        .contact-text small {
+            display: block;
+            color: var(--text-gray);
+            font-size: 0.8rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .social-row {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 900px) {
+            .social-row {
+                justify-content: center;
+            }
+        }
+        
+        .social-btn {
+            width: 55px;
+            height: 55px;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.4rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 212, 170, 0.3);
+        }
+        
+        .social-btn:hover::before {
+            opacity: 1;
+        }
+        
+        .social-btn i {
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s;
+        }
+        
+        .social-btn:hover i {
+            color: white;
+        }
+        
+        /* Background Animation */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+            background-image: 
+                linear-gradient(var(--primary) 1px, transparent 1px),
+                linear-gradient(90deg, var(--primary) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .glow-orb:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: 10%;
+            right: 10%;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .glow-orb:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            background: var(--primary-dark);
+            bottom: 20%;
+            left: 10%;
+            animation: float 25s infinite ease-in-out reverse;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(30px, -30px); }
+            50% { transform: translate(-20px, 20px); }
+            75% { transform: translate(20px, 30px); }
+        }
+        
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Mobile Optimizations */
+        @media (max-width: 480px) {
+            html { font-size: 14px; }
+            .section-header { padding: 2rem 0.5rem 1.5rem; }
+            .intro-container,
+            .account-container,
+            .contact-container { padding: 1rem; }
+            .portfolio-grid { padding: 0.5rem; }
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+    </style>
 </head>
-
 <body>
-<div class="bg-site">
-    <!-- Page Header -->
-    <div class="header">
-        <div class="overlay">
-            <img src="assets/imgs/SayMyName.png" alt="SayMyName" class="img-say">
-            <div class="main-border">
-            <h2 class="subtitle yekan">پارسا دوکی</h2>
-            <h2 class="title yekan">ParSa 2Ki</h2>
-            </div>
-            <div class="card-client">
-                <div class="user-picture">
-                    <img src="assets/imgs/Mojasame.PNG" alt="Mojasame" style="width: 55px;">
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="glow-orb"></div>
+    <div class="glow-orb"></div>
+
+    <!-- Introduction Section -->
+    <section class="intro-section">
+        <div class="section-header">
+            <div class="header-bar"></div>
+            <div class="title-wrapper">
+                <h2 class="section-title">Introduction</h2>
+                <div class="title-icon">
+                    <i class="fas fa-user"></i>
                 </div>
-                <p class="name-client yekan"> پارسا شکاری
-                    <span>برنامه نویس
-                    </span>
+            </div>
+            <div class="section-subtitle">معرفی اجمالی و مشخصات من</div>
+        </div>
+        
+        <div class="intro-container">
+            <div class="intro-content reveal">
+                <h1>پارسا شکاری</h1>
+                <div class="role-badge">برنامه نویس</div>
+                
+                <div class="skills-box">
+                    <div class="skill-item">
+                        <span class="skill-dot"></span>
+                        <span>زبان ها: Lua , Python, CSS, HTML ...</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-dot"></span>
+                        <span>ساکن استان خوزستان</span>
+                    </div>
+                </div>
+                
+                <div class="bio-card">
+                    <p>
+                       حدود ۵ سال سابقه کار در فضای مجازی<br>
+                       +۹۰ پروژه موفق
+                    </p>
+                </div>
+            </div>
+            
+            <div class="profile-wrapper reveal">
+                <div class="profile-ring"></div>
+                <div class="profile-ring"></div>
+                <img src="ParSa_2Ki.jpg" alt="ParSa 2Ki" class="profile-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Account Section -->
+    <section class="account-section">
+        <div class="section-header">
+            <div class="header-bar"></div>
+            <div class="title-wrapper">
+                <h2 class="section-title">My Account</h2>
+                <div class="title-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
+            <div class="section-subtitle">اکانت و پیج کاری من</div>
+        </div>
+        
+        <div class="account-container">
+            <div class="telegram-card reveal">
+                <div class="tg-header">
+                    <div class="tg-avatar">
+                        <i class="fab fa-telegram-plane"></i>
+                    </div>
+                    <div class="tg-title">
+                        <h3>JusticTM</h3>
+                        <span>Public Channel</span>
+                    </div>
+                </div>
+                <div class="tg-content">
+                    <strong>Description</strong>
+                    ... Sell Script Lua , Python -<br>
+                    ... Web Site , Figma , Photoshop -<br><br>
+                    • to contact me [ @ConnectedErroR ]
+                </div>
+                <a href="https://t.me/ConnectedErroR" class="tg-btn">
+                    <i class="fas fa-external-link-alt"></i>
+                    t.me/ConnectedErroR
+                </a>
+            </div>
+            
+            <div class="about-content reveal">
+                <h3> چنل تلگرامی JusticTM</h3>
+                <p>
+                    تمامی نمونه کارهای من از ابتدا فعالیت تا کنون در چنل تلگرامیم قرار گرفته است.
                 </p>
-                <div class="social-media">
-                    <a href="#">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB40lEQVR4nO2YTSuEURTHH8bLJJIyG6SkpCRlIRtlYT6CraWFBiv5Cr6CtZ1vwCxkY1hMIwtZSElKEjFDyctPt86tMe5M95nXq7m/ejYz95zz/z/3PufWCQKPx+PxeAwAUWANOAFy1J+c1FYaokEYgEEggztkgAFb8R3AKe6RUdpsDKziLgkbA+rcuUrKxsA+7rJn+x0sOPYdnAOLVuLzTLSqIOCqgcJvgGUgEkZ4xHAfbACPdRT+KDV/9X8rI8W2C+gDtoC3Ggp/B7aBWLFjbWNAkwLmDP8PSZGPKgr/AnaBEUO9GeBALwxjQJMEJg3rxqVopSSBKUP+Mcn/nb+4HAPI2942XefALHBYhnB138wb8sXkqKrj9IdyDWheJXlvkTN6ZiH8QrpbS0F8N7AJvJQKrtSA5kGKRQ2tdwm4NcTcA+tAW0FMu7TKO5vC1TKguTb1aaBLDD4BWdm1noI1LbITl2EKVtuAJg3EDbn61WP4PS4xoamVgfyOMl0i90SlnSuosQGk7SmRo3k5h6WLfVaaPKiDAY1qgzvyGFui6wZqQuANNJjAG2gwQTMYyOIuzzYGjnGXo/8+2FqxMdDp2FxUk7YaLTo63E1bD3cLhrwJde4a9GFnpfaK9Zv3eDweT9PxA6tyNgVm+cfhAAAAAElFTkSuQmCC" alt="new-post" style="width: 25px;">
-                        <span class="tooltip-social">Khode2Ki@Gmail.Com</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio-section">
+        <div class="section-header">
+            <div class="header-bar"></div>
+            <div class="title-wrapper">
+                <h2 class="section-title">Portfolio</h2>
+                <div class="title-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+            </div>
+            <div class="section-subtitle">نمونه کار من</div>
+        </div>
+        
+        <div class="portfolio-grid">
+            <div class="portfolio-item reveal">
+                <img src="1.png" alt="Sports Design">
+                <div class="portfolio-overlay">
+                    <span class="portfolio-tag">گیم مود</span>
+                    <h3>طراحی گیم مود</h3>
+                    <p>سرور ام تی ای</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item reveal">
+                <img src="2.png" alt="Black Friday">
+                <div class="portfolio-overlay">
+                    <span class="portfolio-tag">لانچر</span>
+                    <h3>طراحی لانچر برای سرور ام تی ای</h3>
+                    <p>پیک ام تی ای</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item reveal">
+                <img src="3.png" alt="Cinema">
+                <div class="portfolio-overlay">
+                    <span class="portfolio-tag">فمیلی تولز</span>
+                    <h3>طراحی برنامه فمیلی تویز</h3>
+                    <p>برای سرور راکستار</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="section-header">
+            <div class="header-bar"></div>
+            <div class="title-wrapper">
+                <h2 class="section-title">Contact Me</h2>
+                <div class="title-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+            </div>
+            <div class="section-subtitle">راه‌های ارتباط با من</div>
+        </div>
+        
+        <div class="contact-container">
+            <div class="logo-container reveal">
+                <div class="logo-hex">
+                    <div class="hex-border"></div>
+                    <div class="hex-inner">
+                        <div class="hex-text">PaRsA</div>
+                        <div class="hex-sub">شکاری</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-info reveal">
+                <h3>ارتباط با من</h3>
+                <p class="contact-desc">
+                    برای ارتباط با بنده می‌توانید از طریق آیدی تلگرامی من و شبکه‌های مجازی اقدام کنید
+                </p>
+                
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="contact-text">
+                            <small>شماره تماس و واتس اپ</small>
+                            -
+                        </div>
+                    </li>
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-telegram-plane"></i>
+                        </div>
+                        <div class="contact-text">
+                            <small>آیدی تلگرام</small>
+                            @ConnectedErroR
+                        </div>
+                    </li>
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <div class="contact-text">
+                            <small>اینستاگرام</small>
+                            @PARSA_2KI
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="social-row">
+                    <a href="https://t.me/ConnectedErroR" class="social-btn" aria-label="Telegram">
+                        <i class="fab fa-telegram-plane"></i>
+                    </a>
+                    <a href="https://www.instagram.com/ParSa.2Ki" class="social-btn" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-btn" aria-label="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
                     </a>
                 </div>
             </div>
-                <div class="loader-wrapper">
-                <span class="loader-letter">a</span>
-                <span class="loader-letter">S</span>
-                <span class="loader-letter">r</span>
-                <span class="loader-letter">a</span>
-                <span class="loader-letter">P</span>
-                <div class="loader"></div>
-            </div>
-        </div>
-    </div>
-    <!-- End Of Page Header -->
-
-    <!-- About Section -->
-    <section class="section pt-0"  id="about">
-        <div class="container">
-            <h6 class="section-title text-center yekan">مهارت های من</h6>
-
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card mb-4 mb-md-0">
-                        <div class="card-body">
-                            <small class="text-primary font-weight-bold">"60%"</small>
-                            <h5 class="card-title mt-3 yekan"> طراحی سایت <h5>
-                                    <p class="mb-0 yekan">طراحی وب سایت با زبان های Css | Js و با زبان نشانه گذاری HTML</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 mb-md-0">
-                        <div class="card-body">
-                            <small class="text-primary font-weight-bold">"45%"</small>
-                            <h5 class="card-title mt-3 yekan">اسکریپت نویسی ام تی ای<h5>
-                                    <p class="mb-0 yekan">نوشتن اسکریپت با زبان Lua و ساخت گیم مود اختصاصی</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 mb-md-0">
-                        <div class="card-body">
-                            <small class="text-primary font-weight-bold">"50%"</small>
-                            <h5 class="card-title mt-3 yekan">Ui | Ux<h5>
-                                    <p class="mb-0 yekan">ساخت Ui و Ux با فیگما برای وب سایت ، ام تی ای و ... </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
-    <!-- End OF Service Section -->
 
-
-    <!-- Testmonial Section -->
-    <section class="section" id="testmonial">
-        <div class="container">
-            <h6 class="section-title text-center mb-0 yekan">درباره</h6>
-            <h6 class="section-subtitle mb-5 text-center yekan">پارسا دوکی</h6>
-            <div class="row">
-                <div class="col-md-4 my-3 my-md-0">
-                    <div class="">
-                    </div>
-                </div>
-                <div class="col-md-4 my-3 my-md-0">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="media align-items-center mb-3">
-                                <img class="mr-3" src="assets/imgs/2Ki.jpg" alt="">
-                                <div class="media-body">
-                                    <h6 class="mt-1 mb-0">ParSa</h6>
-                                    <small class="text-muted mb-0">2Ki</small>
-                                </div>
-                            </div>
-                            <p class="mb-0 yekan">با سلام من ۱۶ سالمه و حدود ۵ ساله ام تی ای پلی میدم و سایت نویسی و زبان لوا (اسکریپت نوشتن برای ام تی ای) مسلط هستم.</p>
-                            <br>
-                                <a href="https://t.me/ParSa_2Ki" class="ml-4 nav-link btn btn-dark btn-sm rounded yekan">Connect</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 my-3 my-md-0">
-                    <div class="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End of Testmonial Section --
-
-    <!-- Page Footer -->
-    <footer class="mt-5 py-4 border-top border-secondary" id="us">
-        <p class="mb-0 small">&copy;
-            <script>document.write(new Date().getFullYear())</script>,Created By <a class="emza"
-                href="#" target="_blank">ParSa</a> All rights reserved
-        </p>
-    </footer>
-    <!-- End of Page Footer -->
-    </div>
-    </section>
-</div>
-
-
-    <script type="text/javascript">
-		document.onkeydown = function (event) {
-		     event = (event || window.event);
-		     if (event.keyCode == 123 || event.keyCode == 18)
-		     {
-		           return false;
-		     }
-		}
-		document.addEventListener('contextmenu', event => event.preventDefault());
-	</script>
-
-    <!-- core  -->
-    <script src="assets/vendors/jquery/jquery-3.4.1.js"></script>
-    <script src="assets/vendors/bootstrap/bootstrap.bundle.js"></script>
-
-    <!-- bootstrap 3 affix -->
-    <script src="assets/vendors/bootstrap/bootstrap.affix.js"></script>
-
-    <!-- Isotope -->
-    <script src="assets/vendors/isotope/isotope.pkgd.js"></script>
-
-    <!-- script js -->
-    <script src="assets/js/script.js"></script>
-
+    <script>
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Smooth hover effects for touch devices
+        document.querySelectorAll('.portfolio-item, .contact-item, .social-btn').forEach(item => {
+            item.addEventListener('touchstart', function() {}, {passive: true});
+        });
+        
+        // Parallax effect for background orbs
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const orbs = document.querySelectorAll('.glow-orb');
+            orbs.forEach((orb, index) => {
+                const speed = 0.5 + (index * 0.2);
+                orb.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+    </script>
 </body>
-
 </html>
