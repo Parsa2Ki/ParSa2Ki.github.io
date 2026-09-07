@@ -1,624 +1,474 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>ParSa 2Ki — Death Note</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Special+Elite&family=Share+Tech+Mono&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>annx_ | Profile</title>
   <style>
-    :root {
-      --bg: #000;
-      --paper: #0a0a0a;
-      --ink: #eaeaea;
-      --gold: #c9a227;
-      --muted: #777;
-      --panel: #0c0c0c;
-      --border: #222;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html, body {
-      height: 100%;
-      background: #000;
-      color: var(--ink);
-      font-family: 'Special Elite', 'Courier New', monospace;
-      overflow-x: hidden;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
+      background: #000;
+      color: #c7d5e0;
+      font-family: "Motiva Sans", Arial, Helvetica, sans-serif;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      position: relative;
+      overflow-x: hidden;
+      line-height: 1.4;
     }
 
-    /* ========== SEAHORSES ========== */
-    .seahorse {
-      position: fixed;
-      top: 50%;
-      width: clamp(110px, 18vw, 200px);
-      height: auto;
-      z-index: 5;
-      pointer-events: none;
-      user-select: none;
-      filter: drop-shadow(0 0 8px rgba(255,255,255,0.12));
-    }
-    .seahorse.left {
-      left: 0.8%;
-      transform: translateY(-50%);
-    }
-    .seahorse.right {
-      right: 0.8%;
-      transform: translateY(-50%) scaleX(-1);
-    }
-
-    /* ========== MAIN LAYOUT ========== */
-    .wrapper {
+    .page-wrapper {
       position: relative;
-      z-index: 10;
-      width: 100%;
       max-width: 1100px;
       margin: 0 auto;
-      padding: 1.5rem 1rem 2.5rem;
-      display: grid;
-      grid-template-columns: 1fr 300px;
-      gap: 1.25rem 1.75rem;
-      align-items: start;
+      padding: 40px 20px 60px;
+      min-height: 100vh;
     }
 
-    /* Top row spanning */
-    .top-row {
-      grid-column: 1 / -1;
+    /* Side decorations */
+    .side-deco {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 140px;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.9;
+    }
+
+    .side-deco.left {
+      left: 0;
+      background: url('left_deco.png') no-repeat center left;
+      background-size: contain;
+    }
+
+    .side-deco.right {
+      right: 0;
+      background: url('right_deco.png') no-repeat center right;
+      background-size: contain;
+    }
+
+    /* Main content */
+    .profile-container {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Header / Profile info */
+    .profile-header {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0 0.25rem 0.5rem;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 30px;
     }
 
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border: 1px solid #3a3a3a;
+      background: #1b2838;
+      overflow: hidden;
+      flex-shrink: 0;
     }
 
-    .user-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 6px;
+    .avatar img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border: 1px solid #333;
-      background: #111;
+      display: block;
+      filter: grayscale(30%);
     }
 
-    .user-name {
-      font-family: 'Cinzel', serif;
-      font-size: 1.05rem;
-      letter-spacing: 0.06em;
-      color: #ddd;
+    .profile-info {
+      flex: 1;
     }
-    .user-name span { color: var(--gold); }
 
-    .level {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.85rem;
-      color: #999;
+    .username {
+      font-size: 26px;
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .status-line {
+      font-size: 12px;
+      color: #8f98a0;
+      margin-bottom: 2px;
+    }
+
+    .status-line .red {
+      color: #c44;
+    }
+
+    /* Section titles */
+    .section-title {
+      font-size: 13px;
+      color: #8f98a0;
+      text-transform: none;
+      margin-bottom: 12px;
+      letter-spacing: 0.3px;
+    }
+
+    .section {
+      margin-bottom: 28px;
+    }
+
+    /* Achievement Showcase */
+    .achievements-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .ach-box {
+      width: 52px;
+      height: 52px;
+      background: #1b2838;
+      border: 1px solid #3a3a3a;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-    }
-    .level b {
-      display: inline-flex;
-      align-items: center;
       justify-content: center;
-      min-width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: #1a1a1a;
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      font-size: 0.9rem;
-      box-shadow: 0 0 10px rgba(201,162,39,0.35);
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 1px;
     }
 
-    /* ========== DEATH NOTE PANEL ========== */
-    .note {
-      position: relative;
-      background: linear-gradient(180deg, #080808 0%, #0e0e0e 40%, #080808 100%);
+    .ach-box.tiger {
+      font-size: 26px;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 32px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: left;
+    }
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: 300;
+      color: #fff;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #8f98a0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .right-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-left: auto;
+      text-align: right;
+      font-size: 12px;
+      color: #8f98a0;
+    }
+
+    .right-stats span {
+      color: #c7d5e0;
+    }
+
+    /* Favorite Guide */
+    .guide-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #1b2838;
       border: 1px solid #2a2a2a;
-      border-radius: 2px;
-      padding: 1.6rem 1.4rem 1.8rem;
-      box-shadow:
-        0 0 0 1px rgba(201,162,39,0.08),
-        0 25px 60px rgba(0,0,0,0.85),
-        inset 0 0 60px rgba(0,0,0,0.4);
+      padding: 10px 14px;
+      max-width: 420px;
     }
 
-    .note-inner {
-      position: relative;
-      border: 1px solid rgba(201,162,39,0.1);
-      padding: 1.1rem 1rem 1.3rem;
-    }
-
-    /* Decorative corners */
-    .note-inner::before,
-    .note-inner::after {
-      content: '';
-      position: absolute;
-      width: 18px;
-      height: 18px;
-      border-color: rgba(201,162,39,0.45);
-    }
-    .note-inner::before {
-      top: 4px; left: 4px;
-      border-top: 1px solid; border-left: 1px solid;
-    }
-    .note-inner::after {
-      bottom: 4px; right: 4px;
-      border-bottom: 1px solid; border-right: 1px solid;
-    }
-
-    .note-header {
-      text-align: center;
-      margin-bottom: 1.15rem;
-      position: relative;
-    }
-
-    .orb {
-      width: 36px;
-      height: 36px;
-      margin: 0 auto 0.5rem;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 32% 28%, #fff8d6 0%, #e8c547 25%, #a07818 55%, #3a2a08 100%);
-      box-shadow:
-        0 0 12px rgba(232,197,71,0.9),
-        0 0 28px rgba(201,162,39,0.45),
-        0 0 50px rgba(201,162,39,0.2);
-      position: relative;
-    }
-    .orb::after {
-      content: '';
-      position: absolute;
-      inset: 6px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.35), transparent 60%);
-    }
-
-    .note-title {
-      font-family: 'Cinzel', serif;
-      font-weight: 900;
-      font-size: 1.7rem;
-      letter-spacing: 0.28em;
-      color: #f2f2f2;
-      text-shadow: 0 0 18px rgba(201,162,39,0.35);
+    .guide-thumb {
+      width: 64px;
+      height: 40px;
+      background: #0e141b;
+      border: 1px solid #333;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      overflow: hidden;
+      flex-shrink: 0;
     }
 
-    .note-title .deco {
-      font-size: 0.9rem;
-      color: var(--gold);
+    .guide-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       opacity: 0.7;
     }
 
-    .note-sub {
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      color: #888;
-      margin-top: 0.3rem;
-      text-transform: uppercase;
+    .guide-info {
+      flex: 1;
     }
 
-    .rules {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-      margin-top: 0.3rem;
-    }
-
-    .rules li {
-      font-size: 0.88rem;
-      line-height: 1.5;
-      color: #d0d0d0;
-      padding-left: 1rem;
-      position: relative;
-    }
-    .rules li::before {
-      content: '•';
-      position: absolute;
-      left: 0;
-      color: var(--gold);
-      font-size: 1rem;
-      top: -1px;
-    }
-    .rules li strong {
+    .guide-title {
+      font-size: 13px;
       color: #fff;
-      font-weight: 400;
+      margin-bottom: 2px;
     }
 
-    /* Vertical JP text */
-    .jp-text {
-      position: absolute;
-      right: -1.6rem;
-      top: 50%;
-      transform: translateY(-50%);
-      writing-mode: vertical-rl;
-      font-family: 'Noto Sans JP', 'Cinzel', serif;
-      font-size: 0.95rem;
-      letter-spacing: 0.4em;
-      color: rgba(255,255,255,0.16);
-      pointer-events: none;
-      user-select: none;
-      white-space: nowrap;
+    .guide-meta {
+      font-size: 11px;
+      color: #8f98a0;
     }
 
-    /* ========== RIGHT PROFILE PANEL ========== */
-    .side {
-      background: linear-gradient(165deg, #0a0a0a, #111);
-      border: 1px solid #222;
-      border-radius: 4px;
-      padding: 1.2rem 1.1rem 1.4rem;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    .stars {
+      color: #66c0f4;
+      font-size: 12px;
+      letter-spacing: 1px;
     }
 
-    .side-title {
-      font-family: 'Cinzel', serif;
-      font-size: 0.95rem;
-      letter-spacing: 0.1em;
-      color: #ddd;
-      margin-bottom: 0.35rem;
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-    }
-    .side-title .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--gold);
-      box-shadow: 0 0 6px var(--gold);
-    }
-
-    .side-desc {
-      font-size: 0.75rem;
-      color: #666;
-      line-height: 1.4;
-      margin-bottom: 1.1rem;
-    }
-
-    .edit-link {
-      display: inline-block;
-      font-size: 0.72rem;
-      color: #888;
-      text-decoration: none;
-      margin-bottom: 1.1rem;
-      border-bottom: 1px solid #333;
-      padding-bottom: 1px;
-    }
-    .edit-link:hover { color: var(--gold); border-color: var(--gold); }
-
-    .section-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: #666;
-      margin-bottom: 0.45rem;
-      margin-top: 0.9rem;
-    }
-    .section-label:first-of-type { margin-top: 0; }
-
-    .awards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      align-items: center;
-    }
-
-    .award {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 28px;
-      height: 24px;
-      padding: 0 0.4rem;
-      background: #151515;
+    /* Big showcase image */
+    .showcase-image {
+      margin: 20px 0;
       border: 1px solid #2a2a2a;
-      border-radius: 3px;
-      font-size: 0.75rem;
-      color: #bbb;
-    }
-    .award.gold {
-      border-color: #8a6d1a;
-      color: var(--gold);
-      background: rgba(201,162,39,0.07);
-    }
-    .award.num {
-      font-family: 'Share Tech Mono', monospace;
-      font-weight: 700;
-      color: #eee;
+      background: #0e141b;
+      max-width: 100%;
+      overflow: hidden;
     }
 
-    .stats {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-    .stats li {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      font-size: 0.82rem;
-      padding-bottom: 0.3rem;
-      border-bottom: 1px solid #1a1a1a;
-    }
-    .stats li span:first-child { color: #777; }
-    .stats li span:last-child {
-      font-family: 'Share Tech Mono', monospace;
-      color: #ddd;
+    .showcase-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-height: 320px;
+      object-fit: cover;
+      object-position: center top;
     }
 
-    .contact-links {
+    /* Captures section */
+    .captures-row {
       display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      margin-top: 0.3rem;
-    }
-    .contact-links a {
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-      text-decoration: none;
-      color: #ccc;
-      font-size: 0.82rem;
-      padding: 0.5rem 0.6rem;
-      background: #121212;
-      border: 1px solid #252525;
-      border-radius: 3px;
-      transition: 0.18s;
-    }
-    .contact-links a:hover {
-      border-color: var(--gold);
-      color: var(--gold);
-      background: rgba(201,162,39,0.06);
-    }
-    .contact-links .ico {
-      width: 16px;
-      text-align: center;
-      opacity: 0.8;
-      font-size: 0.9rem;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
-    /* ========== PORTFOLIO ========== */
-    .portfolio {
-      grid-column: 1 / -1;
-      margin-top: 0.4rem;
-    }
-    .portfolio h3 {
-      font-family: 'Cinzel', serif;
-      font-size: 0.9rem;
-      letter-spacing: 0.16em;
-      color: var(--gold);
-      margin-bottom: 0.75rem;
-      text-transform: uppercase;
-    }
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.7rem;
-    }
-    .card {
-      background: #0c0c0c;
-      border: 1px solid #222;
-      border-radius: 3px;
-      padding: 0.85rem 0.8rem;
-      transition: 0.2s;
-    }
-    .card:hover {
-      border-color: #4a3a12;
-      transform: translateY(-2px);
-    }
-    .card .tag {
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.3rem;
-    }
-    .card h4 {
-      font-family: 'Cinzel', serif;
-      font-size: 0.92rem;
-      color: #eee;
-      margin-bottom: 0.25rem;
-    }
-    .card p {
-      font-size: 0.76rem;
-      color: #777;
-      line-height: 1.4;
-    }
-
-    footer {
-      text-align: center;
-      padding: 1.2rem 1rem 1.8rem;
-      font-size: 0.7rem;
-      color: #444;
-      letter-spacing: 0.04em;
+    .capture-item {
+      width: 160px;
+      height: 100px;
+      background: #1b2838;
+      border: 1px solid #2a2a2a;
+      overflow: hidden;
       position: relative;
-      z-index: 10;
     }
-    footer a { color: #666; text-decoration: none; }
-    footer a:hover { color: var(--gold); }
 
-    /* ========== RESPONSIVE ========== */
-    @media (max-width: 920px) {
-      .seahorse { display: none; }
-      .wrapper {
-        grid-template-columns: 1fr;
-        max-width: 480px;
-        gap: 1.25rem;
+    .capture-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .capture-item.dark img {
+      filter: brightness(0.7);
+    }
+
+    /* Footer-ish */
+    .bottom-bar {
+      margin-top: 40px;
+      padding-top: 16px;
+      border-top: 1px solid #1a1a1a;
+      font-size: 11px;
+      color: #4a4a4a;
+      text-align: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .side-deco {
+        width: 80px;
+        opacity: 0.5;
       }
-      .jp-text { display: none; }
-      .cards { grid-template-columns: 1fr; }
+      .profile-container {
+        max-width: 100%;
+      }
     }
 
-    @media (max-width: 480px) {
-      .wrapper { padding: 1rem 0.75rem 2rem; }
-      .note { padding: 1.2rem 0.9rem 1.4rem; }
-      .note-title { font-size: 1.35rem; letter-spacing: 0.18em; }
-      .rules li { font-size: 0.82rem; }
-      .user-avatar { width: 40px; height: 40px; }
+    @media (max-width: 600px) {
+      .side-deco {
+        display: none;
+      }
+
+      .page-wrapper {
+        padding: 20px 12px 40px;
+      }
+
+      .profile-header {
+        gap: 12px;
+      }
+
+      .avatar {
+        width: 56px;
+        height: 56px;
+      }
+
+      .username {
+        font-size: 22px;
+      }
+
+      .ach-box {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+      }
+
+      .ach-box.tiger {
+        font-size: 20px;
+      }
+
+      .stats-row {
+        gap: 20px;
+      }
+
+      .stat-value {
+        font-size: 18px;
+      }
+
+      .right-stats {
+        margin-left: 0;
+        text-align: left;
+        width: 100%;
+        margin-top: 8px;
+      }
+
+      .capture-item {
+        width: calc(50% - 6px);
+        height: 90px;
+      }
+
+      .guide-card {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .achievements-row {
+        gap: 4px;
+      }
+      .ach-box {
+        width: 36px;
+        height: 36px;
+        font-size: 15px;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="side-deco left"></div>
+  <div class="side-deco right"></div>
 
-  <!-- Detailed Seahorse SVGs matching the illustration style -->
-  <svg class="seahorse left" viewBox="0 0 140 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <!-- Body outline - detailed line art -->
-    <path d="M78 18c-6-10-22-14-32-6-12 9-10 28 2 38 8 7 10 18 4 28-8 14-26 18-36 6-5-6-2-18 8-22 5-2 8-8 4-13-5-7-16-5-20 4-6 14 4 32 22 40 12 5 22 18 18 32-3 12-16 20-30 14-7-3-14 3-11 10 5 12 22 20 38 12 20-10 28-32 18-52-6-12-2-24 10-30 14-8 20-26 10-40-7-10-18-15-29-7z" fill="#f0f0f0"/>
-    <!-- Head detail -->
-    <path d="M52 42c3 0 5 3 5 6s-2 6-5 6-5-3-5-6 2-6 5-6z" fill="#111"/>
-    <path d="M48 28c4-2 10-1 12 4" stroke="#f0f0f0" stroke-width="2.5" fill="none"/>
-    <!-- Snout -->
-    <path d="M42 48c-6 2-10 8-8 14 1 4 6 6 10 4" stroke="#f0f0f0" stroke-width="2.2" fill="none"/>
-    <!-- Belly segments -->
-    <path d="M58 78c-4 6-2 14 4 18" stroke="#ddd" stroke-width="1.8" fill="none" opacity="0.7"/>
-    <path d="M62 98c-3 7 0 14 6 18" stroke="#ddd" stroke-width="1.8" fill="none" opacity="0.7"/>
-    <path d="M66 118c-2 6 2 12 8 14" stroke="#ddd" stroke-width="1.6" fill="none" opacity="0.6"/>
-    <!-- Tail curl -->
-    <path d="M72 145c6 12 20 18 32 10 10-6 12-20 4-30-4-5-12-6-18-2" stroke="#f0f0f0" stroke-width="3" fill="none"/>
-    <path d="M88 160c4 8 14 10 20 4" stroke="#f0f0f0" stroke-width="2.2" fill="none" opacity="0.8"/>
-    <!-- Fin -->
-    <path d="M70 55c8-4 16 2 14 12-1 6-8 8-12 4" stroke="#f0f0f0" stroke-width="2" fill="none" opacity="0.85"/>
-    <path d="M74 70c6 2 10 10 6 16" stroke="#eee" stroke-width="1.6" fill="none" opacity="0.6"/>
-  </svg>
+  <div class="page-wrapper">
+    <div class="profile-container">
 
-  <svg class="seahorse right" viewBox="0 0 140 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M78 18c-6-10-22-14-32-6-12 9-10 28 2 38 8 7 10 18 4 28-8 14-26 18-36 6-5-6-2-18 8-22 5-2 8-8 4-13-5-7-16-5-20 4-6 14 4 32 22 40 12 5 22 18 18 32-3 12-16 20-30 14-7-3-14 3-11 10 5 12 22 20 38 12 20-10 28-32 18-52-6-12-2-24 10-30 14-8 20-26 10-40-7-10-18-15-29-7z" fill="#f0f0f0"/>
-    <path d="M52 42c3 0 5 3 5 6s-2 6-5 6-5-3-5-6 2-6 5-6z" fill="#111"/>
-    <path d="M48 28c4-2 10-1 12 4" stroke="#f0f0f0" stroke-width="2.5" fill="none"/>
-    <path d="M42 48c-6 2-10 8-8 14 1 4 6 6 10 4" stroke="#f0f0f0" stroke-width="2.2" fill="none"/>
-    <path d="M58 78c-4 6-2 14 4 18" stroke="#ddd" stroke-width="1.8" fill="none" opacity="0.7"/>
-    <path d="M62 98c-3 7 0 14 6 18" stroke="#ddd" stroke-width="1.8" fill="none" opacity="0.7"/>
-    <path d="M66 118c-2 6 2 12 8 14" stroke="#ddd" stroke-width="1.6" fill="none" opacity="0.6"/>
-    <path d="M72 145c6 12 20 18 32 10 10-6 12-20 4-30-4-5-12-6-18-2" stroke="#f0f0f0" stroke-width="3" fill="none"/>
-    <path d="M88 160c4 8 14 10 20 4" stroke="#f0f0f0" stroke-width="2.2" fill="none" opacity="0.8"/>
-    <path d="M70 55c8-4 16 2 14 12-1 6-8 8-12 4" stroke="#f0f0f0" stroke-width="2" fill="none" opacity="0.85"/>
-    <path d="M74 70c6 2 10 10 6 16" stroke="#eee" stroke-width="1.6" fill="none" opacity="0.6"/>
-  </svg>
-
-  <div class="wrapper">
-
-    <!-- TOP -->
-    <div class="top-row">
-      <div class="user-info">
-        <img class="user-avatar" src="profile.jpg" alt="ParSa 2Ki" />
-        <div class="user-name">ParSa <span>2Ki</span></div>
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="avatar">
+          <img src="avatar.png" alt="Avatar">
+        </div>
+        <div class="profile-info">
+          <div class="username">annx_</div>
+          <div class="status-line"><span class="red">the process (me)</span></div>
+          <div class="status-line">online</div>
+        </div>
       </div>
-      <div class="level">Level <b>12</b></div>
-    </div>
 
-    <!-- DEATH NOTE -->
-    <div class="note">
-      <div class="note-inner">
-        <div class="note-header">
-          <div class="orb"></div>
-          <div class="note-title">
-            <span class="deco">✦</span>
-            DEATH NOTE
-            <span class="deco">✦</span>
+      <!-- Achievement Showcase -->
+      <div class="section">
+        <div class="section-title">Expositor de logros</div>
+        
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <div class="achievements-row">
+              <div class="ach-box">K</div>
+              <div class="ach-box">A</div>
+              <div class="ach-box">N</div>
+              <div class="ach-box">E</div>
+              <div class="ach-box">K</div>
+              <div class="ach-box">I</div>
+              <div class="ach-box tiger">虎</div>
+            </div>
+
+            <div class="stats-row">
+              <div class="stat">
+                <span class="stat-value">12,144</span>
+                <span class="stat-label">Logros</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">12</span>
+                <span class="stat-label">Juegos completados</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">49%</span>
+                <span class="stat-label">Media de obtención</span>
+              </div>
+            </div>
           </div>
-          <div class="note-sub">How to use it</div>
-        </div>
 
-        <ul class="rules">
-          <li>The human whose name is written in this note <strong>will die</strong>.</li>
-          <li>This note will not take effect unless the writer has the person's face in their mind when writing the name. Therefore, people sharing the same name will not be affected.</li>
-          <li>If the cause of death is written within <strong>40 seconds</strong> of writing the person's name, it will happen.</li>
-          <li>If the cause of death is not specified, the person will simply die of a heart attack.</li>
-          <li>After writing the cause of death, details of the death should be written in the next <strong>6 minutes and 40 seconds</strong>.</li>
-          <li><strong>ParSa 2Ki</strong> — Programmer · Lua · Python · CSS · HTML · 5 years · 90+ projects · Khuzestan</li>
-        </ul>
+          <div class="right-stats">
+            <div>Inventario <span>4</span></div>
+            <div>Capturas <span>2</span></div>
+            <div>Artwork <span>2</span></div>
+          </div>
+        </div>
       </div>
-      <div class="jp-text">死神のノート</div>
+
+      <!-- Favorite Guide -->
+      <div class="section">
+        <div class="section-title">Guía favorita</div>
+        <div class="guide-card">
+          <div class="guide-thumb">
+            <img src="small_capture.png" alt="Guide">
+          </div>
+          <div class="guide-info">
+            <div class="guide-title">Creado por · mentally i'm here</div>
+            <div class="guide-meta">
+              <span class="stars">★★★★★</span> 137 valoraciones
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Big Showcase -->
+      <div class="section">
+        <div class="showcase-image">
+          <img src="kaneki.png" alt="I'm dead inside">
+        </div>
+      </div>
+
+      <!-- Captures Showcase -->
+      <div class="section">
+        <div class="section-title">Expositor de capturas</div>
+        <div class="captures-row">
+          <div class="capture-item">
+            <img src="hands.png" alt="Hands">
+          </div>
+          <div class="capture-item dark">
+            <img src="small_capture.png" alt="Capture">
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-bar">
+        Profile recreation · Dark theme · Responsive
+      </div>
     </div>
-
-    <!-- RIGHT SIDE -->
-    <aside class="side">
-      <div class="side-title"><span class="dot"></span> Profile</div>
-      <p class="side-desc">You can display one of your titles here. Choose it on the profile editing page.</p>
-      <a href="#" class="edit-link">Edit profile</a>
-
-      <div class="section-label">Profile Awards</div>
-      <div class="awards">
-        <span class="award gold">★</span>
-        <span class="award gold">◆</span>
-        <span class="award gold">●</span>
-        <span class="award">▣</span>
-        <span class="award num">25+</span>
-        <span class="award">N</span>
-        <span class="award">R</span>
-      </div>
-
-      <div class="section-label">Stats</div>
-      <ul class="stats">
-        <li><span>Projects</span><span>90+</span></li>
-        <li><span>Experience</span><span>5 yrs</span></li>
-        <li><span>Languages</span><span>4</span></li>
-        <li><span>Games / Mods</span><span>45</span></li>
-        <li><span>Workshop</span><span>2</span></li>
-        <li><span>Guides</span><span>12</span></li>
-        <li><span>Groups</span><span>3</span></li>
-      </ul>
-
-      <div class="section-label">Online</div>
-      <div class="contact-links">
-        <a href="https://t.me/ConnectedErroR" target="_blank" rel="noopener">
-          <span class="ico">✈</span> @ConnectedErroR
-        </a>
-        <a href="https://www.instagram.com/ParSa.2Ki" target="_blank" rel="noopener">
-          <span class="ico">◎</span> @PARSA_2KI
-        </a>
-        <a href="https://t.me/ConnectedErroR" target="_blank" rel="noopener">
-          <span class="ico">◆</span> JusticTM Channel
-        </a>
-      </div>
-    </aside>
-
-    <!-- PORTFOLIO -->
-    <section class="portfolio">
-      <h3>Portfolio</h3>
-      <div class="cards">
-        <div class="card">
-          <div class="tag">Game Mode</div>
-          <h4>MTA Server Gamemode</h4>
-          <p>Custom gamemode design & development for Multi Theft Auto servers.</p>
-        </div>
-        <div class="card">
-          <div class="tag">Launcher</div>
-          <h4>MTA Server Launcher</h4>
-          <p>Custom launcher design for Multi Theft Auto game servers.</p>
-        </div>
-        <div class="card">
-          <div class="tag">Tools</div>
-          <h4>Family Tools</h4>
-          <p>Utility application for Rockstar-based roleplay servers.</p>
-        </div>
-      </div>
-    </section>
-
   </div>
-
-  <footer>
-    ParSa 2Ki · UI inspired by the uploaded design · Data from <a href="https://parsa2ki.github.io">parsa2ki.github.io</a>
-  </footer>
-
 </body>
 </html>
