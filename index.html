@@ -1,1101 +1,611 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ParSa 2Ki</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #00d4aa;
-            --primary-dark: #00a884;
-            --bg-dark: #0a0f0d;
-            --bg-section: #111916;
-            --bg-card: #1a211e;
-            --text-light: #ffffff;
-            --text-gray: #b0b8b5;
-            --border: rgba(0, 212, 170, 0.2);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-        @font-face {
-            font-family: 'unixel';
-            src: url('unixel-Regular.ttf');
-        }
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
-        
-        body {
-            font-family: 'unixel', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.6;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-        
-        /* Header Component */
-        .section-header {
-            text-align: center;
-            padding: 3rem 1rem 2rem;
-            position: relative;
-        }
-        
-        .header-bar {
-            background: linear-gradient(90deg, transparent 0%, var(--primary) 20%, var(--primary-dark) 50%, var(--primary) 80%, transparent 100%);
-            height: 4px;
-            width: 90%;
-            max-width: 600px;
-            margin: 0 auto 1.5rem;
-            border-radius: 2px;
-            position: relative;
-        }
-        
-        .header-bar::before,
-        .header-bar::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 12px;
-            height: 12px;
-            background: var(--primary);
-            border-radius: 50%;
-            box-shadow: 0 0 20px var(--primary);
-        }
-        
-        .header-bar::before { left: 0; }
-        .header-bar::after { right: 0; }
-        
-        .title-wrapper {
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            background: linear-gradient(135deg, rgba(0, 212, 170, 0.1) 0%, rgba(0, 168, 132, 0.1) 100%);
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            border: 2px solid var(--border);
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .title-wrapper::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(0, 212, 170, 0.1), transparent);
-            animation: shimmer 3s infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-        
-        .section-title {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            background: linear-gradient(to bottom, #fff 0%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .title-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            color: white;
-            box-shadow: 0 4px 20px rgba(0, 212, 170, 0.4), inset 0 2px 4px rgba(255,255,255,0.3);
-            position: relative;
-            z-index: 1;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(0, 212, 170, 0.4); }
-            50% { transform: scale(1.05); box-shadow: 0 6px 30px rgba(0, 212, 170, 0.6); }
-        }
-        
-        .section-subtitle {
-            color: var(--primary);
-            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-            margin-top: 1rem;
-            font-weight: 500;
-            opacity: 0.9;
-        }
-        
-        /* Introduction Section */
-        .intro-section {
-            padding: 2rem 1rem;
-            background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-section) 100%);
-        }
-        
-        .intro-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            padding: 2rem;
-        }
-        
-        @media (max-width: 900px) {
-            .intro-container {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-                text-align: center;
-            }
-        }
-        
-        .intro-content h1 {
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--primary) 0%, #00ffcc 50%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-            text-shadow: 0 0 30px rgba(0, 212, 170, 0.3);
-        }
-        
-        .role-badge {
-            display: inline-block;
-            background: linear-gradient(90deg, rgba(0, 212, 170, 0.2) 0%, rgba(0, 168, 132, 0.2) 100%);
-            border: 1px solid var(--border);
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            font-size: clamp(1rem, 3vw, 1.3rem);
-            color: var(--text-light);
-            margin-bottom: 2rem;
-            backdrop-filter: blur(10px);
-        }
-        
-        .skills-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
-        }
-        
-        .skill-item {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            padding: 0.8rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-        }
-        
-        .skill-item:last-child { border-bottom: none; }
-        
-        .skill-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--primary);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--primary);
-        }
-        
-        .bio-card {
-            background: linear-gradient(135deg, rgba(0, 212, 170, 0.1) 0%, rgba(0, 168, 132, 0.05) 100%);
-            border: 2px solid var(--border);
-            border-radius: 20px;
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .bio-card::before {
-            content: '"';
-            position: absolute;
-            top: -20px;
-            right: 20px;
-            font-size: 6rem;
-            color: var(--primary);
-            opacity: 0.2;
-            font-family: serif;
-        }
-        
-        .bio-card p {
-            line-height: 2;
-            color: var(--text-gray);
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-            position: relative;
-            z-index: 1;
-        }
-        
-        .profile-wrapper {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .profile-ring {
-            position: absolute;
-            width: 350px;
-            height: 350px;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            animation: rotate 20s linear infinite;
-            opacity: 0.3;
-        }
-        
-        .profile-ring:nth-child(2) {
-            width: 380px;
-            height: 380px;
-            animation-direction: reverse;
-            animation-duration: 25s;
-            border-style: dashed;
-        }
-        
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
-        .profile-image {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--primary);
-            box-shadow: 0 0 60px rgba(0, 212, 170, 0.4), inset 0 0 60px rgba(0,0,0,0.5);
-            filter: grayscale(100%) contrast(1.1);
-            transition: all 0.5s ease;
-            position: relative;
-            z-index: 2;
-        }
-        
-        @media (max-width: 600px) {
-            .profile-image {
-                width: 220px;
-                height: 220px;
-            }
-            .profile-ring {
-                width: 250px;
-                height: 250px;
-            }
-            .profile-ring:nth-child(2) {
-                width: 280px;
-                height: 280px;
-            }
-        }
-        
-        .profile-image:hover {
-            filter: grayscale(0%) contrast(1);
-            transform: scale(1.05);
-            box-shadow: 0 0 80px rgba(0, 212, 170, 0.6);
-        }
-        
-        /* Account Section */
-        .account-section {
-            padding: 2rem 1rem;
-            background: var(--bg-section);
-        }
-        
-        .account-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-            padding: 2rem;
-        }
-        
-        @media (max-width: 900px) {
-            .account-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-        }
-        
-        .telegram-card {
-            background: linear-gradient(145deg, #161b19 0%, #0f1412 100%);
-            border-radius: 24px;
-            padding: 2rem;
-            border: 1px solid var(--border);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(0, 212, 170, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .telegram-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-        }
-        
-        .tg-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        
-        .tg-avatar {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #0088cc 0%, #00a8e8 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: white;
-            box-shadow: 0 4px 20px rgba(0, 136, 204, 0.4);
-        }
-        
-        .tg-title h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.2rem;
-        }
-        
-        .tg-title span {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-        }
-        
-        .tg-content {
-            color: var(--text-gray);
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-        
-        .tg-content strong {
-            color: var(--primary);
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-        
-        .tg-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: linear-gradient(90deg, rgba(0, 212, 170, 0.2) 0%, rgba(0, 168, 132, 0.2) 100%);
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            font-size: 0.95rem;
-        }
-        
-        .tg-btn:hover {
-            background: var(--primary);
-            color: var(--bg-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 212, 170, 0.4);
-        }
-        
-        .about-content h3 {
-            font-size: clamp(1.5rem, 4vw, 2rem);
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-        
-        .about-content p {
-            color: var(--text-gray);
-            line-height: 2;
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-        }
-        
-        .highlight {
-            color: var(--primary);
-            font-weight: 600;
-        }
-        
-        /* Portfolio Section */
-        .portfolio-section {
-            padding: 2rem 1rem;
-            background: linear-gradient(180deg, var(--bg-section) 0%, var(--bg-dark) 100%);
-        }
-        
-        .portfolio-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            padding: 2rem;
-        }
-        
-        @media (max-width: 1024px) {
-            .portfolio-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 640px) {
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                padding: 1rem;
-            }
-        }
-        
-        .portfolio-item {
-            position: relative;
-            border-radius: 24px;
-            overflow: hidden;
-            aspect-ratio: 3/4;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-            cursor: pointer;
-            group: true;
-        }
-        
-        .portfolio-item::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(0, 212, 170, 0.1) 50%, transparent 70%);
-            z-index: 2;
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-        
-        .portfolio-item:hover::before {
-            opacity: 1;
-        }
-        
-        .portfolio-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .portfolio-item:hover img {
-            transform: scale(1.1);
-        }
-        
-        .portfolio-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, transparent 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 2rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .portfolio-item:hover .portfolio-overlay {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .portfolio-tag {
-            display: inline-block;
-            background: var(--primary);
-            color: var(--bg-dark);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            width: fit-content;
-        }
-        
-        .portfolio-overlay h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: white;
-        }
-        
-        .portfolio-overlay p {
-            color: var(--text-gray);
-            font-size: 0.95rem;
-        }
-        
-        /* Contact Section */
-        .contact-section {
-            padding: 2rem 1rem 4rem;
-            background: var(--bg-dark);
-        }
-        
-        .contact-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            padding: 2rem;
-        }
-        
-        @media (max-width: 900px) {
-            .contact-container {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-                text-align: center;
-            }
-        }
-        
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .logo-hex {
-            width: 280px;
-            height: 320px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        @media (max-width: 600px) {
-            .logo-hex {
-                width: 220px;
-                height: 260px;
-            }
-        }
-        
-        .hex-border {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            animation: rotate 10s linear infinite;
-        }
-        
-        .hex-inner {
-            position: absolute;
-            inset: 4px;
-            background: linear-gradient(145deg, #1a211e 0%, #0f1412 100%);
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 2;
-        }
-        
-        .hex-text {
-            font-size: 5rem;
-            font-weight: 900;
-            background: linear-gradient(to bottom, #fff 0%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1;
-        }
-        
-        .hex-sub {
-            font-size: 1.2rem;
-            color: var(--primary);
-            margin-top: 0.5rem;
-            letter-spacing: 0.2em;
-        }
-        
-        @media (max-width: 600px) {
-            .hex-text { font-size: 3.5rem; }
-            .hex-sub { font-size: 1rem; }
-        }
-        
-        .contact-info h3 {
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-        
-        .contact-desc {
-            color: var(--text-gray);
-            line-height: 2;
-            margin-bottom: 2rem;
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-        }
-        
-        .contact-list {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            margin-bottom: 1rem;
-            transition: all 0.3s;
-        }
-        
-        @media (max-width: 900px) {
-            .contact-item {
-                justify-content: center;
-            }
-        }
-        
-        .contact-item:hover {
-            transform: translateX(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 5px 20px rgba(0, 212, 170, 0.2);
-        }
-        
-        .contact-icon {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, rgba(0, 212, 170, 0.2) 0%, rgba(0, 168, 132, 0.2) 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 1.2rem;
-            flex-shrink: 0;
-        }
-        
-        .contact-text {
-            font-size: clamp(0.85rem, 2.5vw, 1.1rem);
-            color: var(--text-light);
-        }
-        
-        .contact-text small {
-            display: block;
-            color: var(--text-gray);
-            font-size: 0.8rem;
-            margin-bottom: 0.2rem;
-        }
-        
-        .social-row {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-        
-        @media (max-width: 900px) {
-            .social-row {
-                justify-content: center;
-            }
-        }
-        
-        .social-btn {
-            width: 55px;
-            height: 55px;
-            background: var(--bg-card);
-            border: 2px solid var(--border);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 1.4rem;
-            transition: all 0.3s;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .social-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .social-btn:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(0, 212, 170, 0.3);
-        }
-        
-        .social-btn:hover::before {
-            opacity: 1;
-        }
-        
-        .social-btn i {
-            position: relative;
-            z-index: 1;
-            transition: color 0.3s;
-        }
-        
-        .social-btn:hover i {
-            color: white;
-        }
-        
-        /* Background Animation */
-        .bg-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.03;
-            background-image: 
-                linear-gradient(var(--primary) 1px, transparent 1px),
-                linear-gradient(90deg, var(--primary) 1px, transparent 1px);
-            background-size: 50px 50px;
-        }
-        
-        .glow-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15;
-            pointer-events: none;
-            z-index: 0;
-        }
-        
-        .glow-orb:nth-child(1) {
-            width: 400px;
-            height: 400px;
-            background: var(--primary);
-            top: 10%;
-            right: 10%;
-            animation: float 20s infinite ease-in-out;
-        }
-        
-        .glow-orb:nth-child(2) {
-            width: 300px;
-            height: 300px;
-            background: var(--primary-dark);
-            bottom: 20%;
-            left: 10%;
-            animation: float 25s infinite ease-in-out reverse;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(30px, -30px); }
-            50% { transform: translate(-20px, 20px); }
-            75% { transform: translate(20px, 30px); }
-        }
-        
-        /* Scroll Reveal */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Mobile Optimizations */
-        @media (max-width: 480px) {
-            html { font-size: 14px; }
-            .section-header { padding: 2rem 0.5rem 1.5rem; }
-            .intro-container,
-            .account-container,
-            .contact-container { padding: 1rem; }
-            .portfolio-grid { padding: 0.5rem; }
-        }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: var(--bg-dark);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ParSa 2Ki — Death Note</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Special+Elite&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #000000;
+      --paper: #0d0d0d;
+      --ink: #e8e8e8;
+      --accent: #c9a227;
+      --red: #8b0000;
+      --glow: rgba(201, 162, 39, 0.35);
+      --muted: #8a8a8a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Special Elite', 'Courier New', monospace;
+      overflow-x: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Background subtle grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Seahorses */
+    .seahorse {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: min(22vw, 180px);
+      height: auto;
+      opacity: 0.85;
+      z-index: 1;
+      filter: drop-shadow(0 0 12px rgba(255,255,255,0.15));
+      pointer-events: none;
+      user-select: none;
+    }
+    .seahorse.left  { left: 1.5%; }
+    .seahorse.right { right: 1.5%; transform: translateY(-50%) scaleX(-1); }
+
+    /* Main layout */
+    .page {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr minmax(280px, 420px) minmax(260px, 340px);
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem 3rem;
+      width: 100%;
+      align-items: start;
+    }
+
+    @media (max-width: 980px) {
+      .seahorse { display: none; }
+      .page {
+        grid-template-columns: 1fr;
+        max-width: 520px;
+      }
+    }
+
+    /* Top bar / avatar */
+    .top-bar {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+      padding: 0 0.5rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      object-fit: cover;
+      box-shadow: 0 0 18px var(--glow);
+      background: #111;
+    }
+
+    .brand-text {
+      font-family: 'Cinzel', serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+    }
+    .brand-text span {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .level-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .level-badge .lvl {
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-weight: 700;
+      box-shadow: 0 0 10px var(--glow);
+    }
+
+    /* Death Note panel */
+    .note-panel {
+      background: linear-gradient(180deg, #0a0a0a 0%, #111 50%, #0a0a0a 100%);
+      border: 1px solid #2a2a2a;
+      border-radius: 4px;
+      padding: 1.75rem 1.5rem 2rem;
+      position: relative;
+      box-shadow:
+        0 0 0 1px rgba(201,162,39,0.15),
+        0 20px 50px rgba(0,0,0,0.7),
+        inset 0 0 40px rgba(0,0,0,0.5);
+    }
+
+    .note-panel::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(201,162,39,0.12);
+      pointer-events: none;
+    }
+
+    .note-header {
+      text-align: center;
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+
+    .note-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      color: #f0f0f0;
+      text-shadow: 0 0 20px rgba(201,162,39,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    .note-title .orb {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff8e0, #c9a227 45%, #5a4010 100%);
+      box-shadow: 0 0 18px rgba(201,162,39,0.7), 0 0 40px rgba(201,162,39,0.3);
+      flex-shrink: 0;
+    }
+
+    .note-subtitle {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      margin-top: 0.35rem;
+      text-transform: uppercase;
+    }
+
+    .rules {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .rules li {
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: #d4d4d4;
+      padding-left: 1.1rem;
+      position: relative;
+    }
+
+    .rules li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+
+    .rules li strong {
+      color: #fff;
+      font-weight: 400;
+    }
+
+    .vertical-jp {
+      position: absolute;
+      right: -1.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      writing-mode: vertical-rl;
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.35em;
+      color: rgba(255,255,255,0.18);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    @media (max-width: 980px) {
+      .vertical-jp { display: none; }
+    }
+
+    /* Right profile panel */
+    .profile-panel {
+      background: linear-gradient(165deg, #0c0c0c, #141414);
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 1.4rem 1.25rem 1.6rem;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+    }
+
+    .profile-panel h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .profile-panel h2 .dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .profile-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 1.1rem;
+      line-height: 1.4;
+    }
+
+    .stat-block {
+      margin-bottom: 1.15rem;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+    }
+
+    .stat-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      padding: 0.28rem 0.55rem;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      color: #ccc;
+    }
+
+    .badge.gold {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(201,162,39,0.08);
+    }
+
+    .badge.num {
+      font-family: 'Share Tech Mono', monospace;
+      font-weight: 700;
+    }
+
+    .info-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin-top: 0.3rem;
+    }
+
+    .info-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.85rem;
+      border-bottom: 1px solid #222;
+      padding-bottom: 0.35rem;
+    }
+
+    .info-list li span:first-child {
+      color: var(--muted);
+    }
+
+    .info-list li span:last-child {
+      color: #e0e0e0;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .links a {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: #ddd;
+      font-size: 0.88rem;
+      padding: 0.55rem 0.7rem;
+      background: #151515;
+      border: 1px solid #2a2a2a;
+      border-radius: 4px;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+
+    .links a:hover {
+      border-color: var(--accent);
+      background: rgba(201,162,39,0.08);
+      color: var(--accent);
+    }
+
+    .links a .ico {
+      width: 18px;
+      text-align: center;
+      opacity: 0.85;
+    }
+
+    /* Portfolio mini cards under note */
+    .portfolio {
+      grid-column: 1 / 3;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 980px) {
+      .portfolio { grid-column: 1; }
+    }
+
+    .portfolio h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 0.85rem;
+      text-transform: uppercase;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 640px) {
+      .cards { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: #0f0f0f;
+      border: 1px solid #2a2a2a;
+      border-radius: 4px;
+      padding: 0.9rem 0.85rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .card .tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+
+    .card h4 {
+      font-size: 0.95rem;
+      color: #eee;
+      margin-bottom: 0.25rem;
+      font-family: 'Cinzel', serif;
+    }
+
+    .card p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1.5rem 1rem 2rem;
+      font-size: 0.75rem;
+      color: #555;
+      position: relative;
+      z-index: 2;
+      letter-spacing: 0.05em;
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--accent); }
+
+    /* Decorative corners on note */
+    .corner {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-color: var(--accent);
+      opacity: 0.5;
+    }
+    .corner.tl { top: 6px; left: 6px; border-top: 1px solid; border-left: 1px solid; }
+    .corner.tr { top: 6px; right: 6px; border-top: 1px solid; border-right: 1px solid; }
+    .corner.bl { bottom: 6px; left: 6px; border-bottom: 1px solid; border-left: 1px solid; }
+    .corner.br { bottom: 6px; right: 6px; border-bottom: 1px solid; border-right: 1px solid; }
+  </style>
 </head>
 <body>
-    <!-- Background Effects -->
-    <div class="bg-grid"></div>
-    <div class="glow-orb"></div>
-    <div class="glow-orb"></div>
 
-    <!-- Introduction Section -->
-    <section class="intro-section">
-        <div class="section-header">
-            <div class="header-bar"></div>
-            <div class="title-wrapper">
-                <h2 class="section-title">Introduction</h2>
-                <div class="title-icon">
-                    <i class="fas fa-user"></i>
-                </div>
-            </div>
-            <div class="section-subtitle">معرفی اجمالی و مشخصات من</div>
+  <!-- Seahorses (SVG) -->
+  <svg class="seahorse left" viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M70 20c-8-12-28-8-32 8-3 12 4 22 12 28 6 4 8 12 4 20-6 12-22 14-28 4-4-6 0-16 8-18 4-1 6-6 3-10-4-6-14-4-16 4-4 16 10 32 28 36 14 3 24 16 20 30-3 12-16 18-28 12-6-3-12 2-10 8 4 14 24 20 38 10 18-12 22-36 12-54-6-10-4-22 6-28 12-8 16-24 8-36-6-10-18-14-28-6z" fill="#f5f5f5" opacity="0.9"/>
+    <path d="M62 48c2 0 4 2 4 4s-2 4-4 4-4-2-4-4 2-4 4-4z" fill="#111"/>
+    <path d="M48 95c-2 8 2 18 12 22 8 3 14 12 10 22-2 6-10 8-16 4" stroke="#f5f5f5" stroke-width="3" fill="none" opacity="0.7"/>
+    <path d="M55 140c4 10 16 16 26 10 8-4 10-16 4-24" stroke="#f5f5f5" stroke-width="2.5" fill="none" opacity="0.6"/>
+  </svg>
+
+  <svg class="seahorse right" viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M70 20c-8-12-28-8-32 8-3 12 4 22 12 28 6 4 8 12 4 20-6 12-22 14-28 4-4-6 0-16 8-18 4-1 6-6 3-10-4-6-14-4-16 4-4 16 10 32 28 36 14 3 24 16 20 30-3 12-16 18-28 12-6-3-12 2-10 8 4 14 24 20 38 10 18-12 22-36 12-54-6-10-4-22 6-28 12-8 16-24 8-36-6-10-18-14-28-6z" fill="#f5f5f5" opacity="0.9"/>
+    <path d="M62 48c2 0 4 2 4 4s-2 4-4 4-4-2-4-4 2-4 4-4z" fill="#111"/>
+    <path d="M48 95c-2 8 2 18 12 22 8 3 14 12 10 22-2 6-10 8-16 4" stroke="#f5f5f5" stroke-width="3" fill="none" opacity="0.7"/>
+    <path d="M55 140c4 10 16 16 26 10 8-4 10-16 4-24" stroke="#f5f5f5" stroke-width="2.5" fill="none" opacity="0.6"/>
+  </svg>
+
+  <div class="page">
+
+    <!-- Top -->
+    <div class="top-bar">
+      <div class="brand">
+        <img class="avatar" src="profile.jpg" alt="ParSa 2Ki" />
+        <div class="brand-text">ParSa <span>2Ki</span></div>
+      </div>
+      <div class="level-badge">
+        Level <span class="lvl">12</span>
+      </div>
+    </div>
+
+    <!-- Death Note style center -->
+    <div class="note-panel">
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
+
+      <div class="note-header">
+        <div class="note-title">
+          <span class="orb"></span>
+          DEATH NOTE
         </div>
-        
-        <div class="intro-container">
-            <div class="intro-content reveal">
-                <h1>پارسا شکاری</h1>
-                <div class="role-badge">برنامه نویس</div>
-                
-                <div class="skills-box">
-                    <div class="skill-item">
-                        <span class="skill-dot"></span>
-                        <span>زبان ها: Lua , Python, CSS, HTML ...</span>
-                    </div>
-                    <div class="skill-item">
-                        <span class="skill-dot"></span>
-                        <span>ساکن استان خوزستان</span>
-                    </div>
-                </div>
-                
-                <div class="bio-card">
-                    <p>
-                       حدود ۵ سال سابقه کار در فضای مجازی<br>
-                       +۹۰ پروژه موفق
-                    </p>
-                </div>
-            </div>
-            
-            <div class="profile-wrapper reveal">
-                <div class="profile-ring"></div>
-                <div class="profile-ring"></div>
-                <img src="ParSa_2Ki.jpg" alt="ParSa 2Ki" class="profile-image">
-            </div>
+        <div class="note-subtitle">How to use it · ParSa Edition</div>
+      </div>
+
+      <ul class="rules">
+        <li>The human whose name is written in this note <strong>will die</strong>.</li>
+        <li>This note will not take effect unless the writer has the person's face in their mind when writing the name. Therefore, people sharing the same name will not be affected.</li>
+        <li>If the cause of death is written within <strong>40 seconds</strong> of writing the person's name, it will happen.</li>
+        <li>If the cause of death is not specified, the person will simply die of a heart attack.</li>
+        <li>After writing the cause of death, details of the death should be written in the next <strong>6 minutes and 40 seconds</strong>.</li>
+        <li><strong>ParSa 2Ki</strong> — Programmer · Lua, Python, CSS, HTML · ~5 years experience · +90 successful projects · Based in Khuzestan.</li>
+      </ul>
+
+      <div class="vertical-jp">死神のノート</div>
+    </div>
+
+    <!-- Right profile -->
+    <aside class="profile-panel">
+      <h2><span class="dot"></span> Profile</h2>
+      <p class="profile-desc">You can display one of your titles here. Edit your profile on the settings page.</p>
+
+      <div class="stat-block">
+        <div class="stat-label">Profile Awards</div>
+        <div class="stat-row">
+          <span class="badge gold">★</span>
+          <span class="badge gold">◆</span>
+          <span class="badge">25+</span>
+          <span class="badge">N</span>
+          <span class="badge">R</span>
         </div>
+      </div>
+
+      <div class="stat-block">
+        <div class="stat-label">Stats</div>
+        <ul class="info-list">
+          <li><span>Projects</span><span>90+</span></li>
+          <li><span>Experience</span><span>5 years</span></li>
+          <li><span>Languages</span><span>Lua · Python · CSS · HTML</span></li>
+          <li><span>Location</span><span>Khuzestan</span></li>
+          <li><span>Role</span><span>Programmer</span></li>
+        </ul>
+      </div>
+
+      <div class="stat-block">
+        <div class="stat-label">Online</div>
+        <div class="links">
+          <a href="https://t.me/ConnectedErroR" target="_blank" rel="noopener">
+            <span class="ico">✈</span> Telegram · @ConnectedErroR
+          </a>
+          <a href="https://www.instagram.com/ParSa.2Ki" target="_blank" rel="noopener">
+            <span class="ico">◎</span> Instagram · @PARSA_2KI
+          </a>
+          <a href="https://t.me/ConnectedErroR" target="_blank" rel="noopener">
+            <span class="ico">◆</span> Channel · JusticTM
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Portfolio -->
+    <section class="portfolio">
+      <h3>Portfolio</h3>
+      <div class="cards">
+        <div class="card">
+          <div class="tag">Game Mode</div>
+          <h4>MTA Server Gamemode</h4>
+          <p>Custom gamemode design and development for Multi Theft Auto servers.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Launcher</div>
+          <h4>MTA Server Launcher</h4>
+          <p>Custom launcher design for Multi Theft Auto game servers.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Tools</div>
+          <h4>Family Tools</h4>
+          <p>Utility application designed for Rockstar-based roleplay servers.</p>
+        </div>
+      </div>
     </section>
 
-    <!-- Account Section -->
-    <section class="account-section">
-        <div class="section-header">
-            <div class="header-bar"></div>
-            <div class="title-wrapper">
-                <h2 class="section-title">My Account</h2>
-                <div class="title-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-            </div>
-            <div class="section-subtitle">اکانت و پیج کاری من</div>
-        </div>
-        
-        <div class="account-container">
-            <div class="telegram-card reveal">
-                <div class="tg-header">
-                    <div class="tg-avatar">
-                        <i class="fab fa-telegram-plane"></i>
-                    </div>
-                    <div class="tg-title">
-                        <h3>JusticTM</h3>
-                        <span>Public Channel</span>
-                    </div>
-                </div>
-                <div class="tg-content">
-                    <strong>Description</strong>
-                    ... Sell Script Lua , Python -<br>
-                    ... Web Site , Figma , Photoshop -<br><br>
-                    • to contact me [ @ConnectedErroR ]
-                </div>
-                <a href="https://t.me/ConnectedErroR" class="tg-btn">
-                    <i class="fas fa-external-link-alt"></i>
-                    t.me/ConnectedErroR
-                </a>
-            </div>
-            
-            <div class="about-content reveal">
-                <h3> چنل تلگرامی JusticTM</h3>
-                <p>
-                    تمامی نمونه کارهای من از ابتدا فعالیت تا کنون در چنل تلگرامیم قرار گرفته است.
-                </p>
-            </div>
-        </div>
-    </section>
+  </div>
 
-    <!-- Portfolio Section -->
-    <section class="portfolio-section">
-        <div class="section-header">
-            <div class="header-bar"></div>
-            <div class="title-wrapper">
-                <h2 class="section-title">Portfolio</h2>
-                <div class="title-icon">
-                    <i class="fas fa-palette"></i>
-                </div>
-            </div>
-            <div class="section-subtitle">نمونه کار من</div>
-        </div>
-        
-        <div class="portfolio-grid">
-            <div class="portfolio-item reveal">
-                <img src="1.png" alt="Sports Design">
-                <div class="portfolio-overlay">
-                    <span class="portfolio-tag">گیم مود</span>
-                    <h3>طراحی گیم مود</h3>
-                    <p>سرور ام تی ای</p>
-                </div>
-            </div>
-            
-            <div class="portfolio-item reveal">
-                <img src="2.png" alt="Black Friday">
-                <div class="portfolio-overlay">
-                    <span class="portfolio-tag">لانچر</span>
-                    <h3>طراحی لانچر برای سرور ام تی ای</h3>
-                    <p>پیک ام تی ای</p>
-                </div>
-            </div>
-            
-            <div class="portfolio-item reveal">
-                <img src="3.png" alt="Cinema">
-                <div class="portfolio-overlay">
-                    <span class="portfolio-tag">فمیلی تولز</span>
-                    <h3>طراحی برنامه فمیلی تویز</h3>
-                    <p>برای سرور راکستار</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <footer>
+    ParSa 2Ki · Death Note UI · Data from <a href="https://parsa2ki.github.io">parsa2ki.github.io</a>
+  </footer>
 
-    <!-- Contact Section -->
-    <section class="contact-section">
-        <div class="section-header">
-            <div class="header-bar"></div>
-            <div class="title-wrapper">
-                <h2 class="section-title">Contact Me</h2>
-                <div class="title-icon">
-                    <i class="fas fa-phone"></i>
-                </div>
-            </div>
-            <div class="section-subtitle">راه‌های ارتباط با من</div>
-        </div>
-        
-        <div class="contact-container">
-            <div class="logo-container reveal">
-                <div class="logo-hex">
-                    <div class="hex-border"></div>
-                    <div class="hex-inner">
-                        <div class="hex-text">PaRsA</div>
-                        <div class="hex-sub">شکاری</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="contact-info reveal">
-                <h3>ارتباط با من</h3>
-                <p class="contact-desc">
-                    برای ارتباط با بنده می‌توانید از طریق آیدی تلگرامی من و شبکه‌های مجازی اقدام کنید
-                </p>
-                
-                <ul class="contact-list">
-                    <li class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-whatsapp"></i>
-                        </div>
-                        <div class="contact-text">
-                            <small>شماره تماس و واتس اپ</small>
-                            -
-                        </div>
-                    </li>
-                    <li class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-telegram-plane"></i>
-                        </div>
-                        <div class="contact-text">
-                            <small>آیدی تلگرام</small>
-                            @ConnectedErroR
-                        </div>
-                    </li>
-                    <li class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-instagram"></i>
-                        </div>
-                        <div class="contact-text">
-                            <small>اینستاگرام</small>
-                            @PARSA_2KI
-                        </div>
-                    </li>
-                </ul>
-                
-                <div class="social-row">
-                    <a href="https://t.me/ConnectedErroR" class="social-btn" aria-label="Telegram">
-                        <i class="fab fa-telegram-plane"></i>
-                    </a>
-                    <a href="https://www.instagram.com/ParSa.2Ki" class="social-btn" aria-label="Instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="#" class="social-btn" aria-label="WhatsApp">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        // Scroll Reveal Animation
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('.reveal').forEach(el => {
-            observer.observe(el);
-        });
-        
-        // Smooth hover effects for touch devices
-        document.querySelectorAll('.portfolio-item, .contact-item, .social-btn').forEach(item => {
-            item.addEventListener('touchstart', function() {}, {passive: true});
-        });
-        
-        // Parallax effect for background orbs
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const orbs = document.querySelectorAll('.glow-orb');
-            orbs.forEach((orb, index) => {
-                const speed = 0.5 + (index * 0.2);
-                orb.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-        });
-    </script>
 </body>
 </html>
