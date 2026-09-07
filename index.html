@@ -2,31 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>ParSa 2Ki — Death Note</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Special+Elite&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Special+Elite&family=Share+Tech+Mono&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #000000;
-      --paper: #0d0d0d;
-      --ink: #e8e8e8;
-      --accent: #c9a227;
-      --red: #8b0000;
-      --glow: rgba(201, 162, 39, 0.35);
-      --muted: #8a8a8a;
+      --bg: #000;
+      --paper: #0a0a0a;
+      --ink: #eaeaea;
+      --gold: #c9a227;
+      --muted: #777;
+      --panel: #0c0c0c;
+      --border: #222;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
       height: 100%;
-      background: var(--bg);
+      background: #000;
       color: var(--ink);
       font-family: 'Special Elite', 'Courier New', monospace;
       overflow-x: hidden;
@@ -39,167 +35,183 @@
       position: relative;
     }
 
-    /* Background subtle grid */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Seahorses */
+    /* ========== SEAHORSES ========== */
     .seahorse {
       position: fixed;
       top: 50%;
-      transform: translateY(-50%);
-      width: min(22vw, 180px);
+      width: clamp(110px, 18vw, 200px);
       height: auto;
-      opacity: 0.85;
-      z-index: 1;
-      filter: drop-shadow(0 0 12px rgba(255,255,255,0.15));
+      z-index: 5;
       pointer-events: none;
       user-select: none;
+      filter: drop-shadow(0 0 8px rgba(255,255,255,0.12));
     }
-    .seahorse.left  { left: 1.5%; }
-    .seahorse.right { right: 1.5%; transform: translateY(-50%) scaleX(-1); }
+    .seahorse.left {
+      left: 0.8%;
+      transform: translateY(-50%);
+    }
+    .seahorse.right {
+      right: 0.8%;
+      transform: translateY(-50%) scaleX(-1);
+    }
 
-    /* Main layout */
-    .page {
+    /* ========== MAIN LAYOUT ========== */
+    .wrapper {
       position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: 1fr minmax(280px, 420px) minmax(260px, 340px);
-      gap: 1.5rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem 1rem 3rem;
+      z-index: 10;
       width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 1.25rem 1.75rem;
       align-items: start;
     }
 
-    @media (max-width: 980px) {
-      .seahorse { display: none; }
-      .page {
-        grid-template-columns: 1fr;
-        max-width: 520px;
-      }
-    }
-
-    /* Top bar / avatar */
-    .top-bar {
+    /* Top row spanning */
+    .top-row {
       grid-column: 1 / -1;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      margin-bottom: 0.5rem;
-      padding: 0 0.5rem;
+      padding: 0 0.25rem 0.5rem;
     }
 
-    .brand {
+    .user-info {
       display: flex;
       align-items: center;
-      gap: 0.85rem;
+      gap: 0.75rem;
     }
 
-    .avatar {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      border: 2px solid var(--accent);
+    .user-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 6px;
       object-fit: cover;
-      box-shadow: 0 0 18px var(--glow);
+      border: 1px solid #333;
       background: #111;
     }
 
-    .brand-text {
+    .user-name {
       font-family: 'Cinzel', serif;
-      font-size: 1.15rem;
-      letter-spacing: 0.08em;
-      color: var(--ink);
+      font-size: 1.05rem;
+      letter-spacing: 0.06em;
+      color: #ddd;
     }
-    .brand-text span {
-      color: var(--accent);
-      font-weight: 700;
-    }
+    .user-name span { color: var(--gold); }
 
-    .level-badge {
+    .level {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+      color: #999;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-family: 'Share Tech Mono', monospace;
+      gap: 0.4rem;
+    }
+    .level b {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      border: 1px solid var(--gold);
+      color: var(--gold);
       font-size: 0.9rem;
-      color: var(--muted);
-    }
-    .level-badge .lvl {
-      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      padding: 0.25rem 0.65rem;
-      border-radius: 999px;
-      font-weight: 700;
-      box-shadow: 0 0 10px var(--glow);
+      box-shadow: 0 0 10px rgba(201,162,39,0.35);
     }
 
-    /* Death Note panel */
-    .note-panel {
-      background: linear-gradient(180deg, #0a0a0a 0%, #111 50%, #0a0a0a 100%);
-      border: 1px solid #2a2a2a;
-      border-radius: 4px;
-      padding: 1.75rem 1.5rem 2rem;
+    /* ========== DEATH NOTE PANEL ========== */
+    .note {
       position: relative;
+      background: linear-gradient(180deg, #080808 0%, #0e0e0e 40%, #080808 100%);
+      border: 1px solid #2a2a2a;
+      border-radius: 2px;
+      padding: 1.6rem 1.4rem 1.8rem;
       box-shadow:
-        0 0 0 1px rgba(201,162,39,0.15),
-        0 20px 50px rgba(0,0,0,0.7),
-        inset 0 0 40px rgba(0,0,0,0.5);
+        0 0 0 1px rgba(201,162,39,0.08),
+        0 25px 60px rgba(0,0,0,0.85),
+        inset 0 0 60px rgba(0,0,0,0.4);
     }
 
-    .note-panel::before {
+    .note-inner {
+      position: relative;
+      border: 1px solid rgba(201,162,39,0.1);
+      padding: 1.1rem 1rem 1.3rem;
+    }
+
+    /* Decorative corners */
+    .note-inner::before,
+    .note-inner::after {
       content: '';
       position: absolute;
-      inset: 8px;
-      border: 1px solid rgba(201,162,39,0.12);
-      pointer-events: none;
+      width: 18px;
+      height: 18px;
+      border-color: rgba(201,162,39,0.45);
+    }
+    .note-inner::before {
+      top: 4px; left: 4px;
+      border-top: 1px solid; border-left: 1px solid;
+    }
+    .note-inner::after {
+      bottom: 4px; right: 4px;
+      border-bottom: 1px solid; border-right: 1px solid;
     }
 
     .note-header {
       text-align: center;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.15rem;
       position: relative;
+    }
+
+    .orb {
+      width: 36px;
+      height: 36px;
+      margin: 0 auto 0.5rem;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 32% 28%, #fff8d6 0%, #e8c547 25%, #a07818 55%, #3a2a08 100%);
+      box-shadow:
+        0 0 12px rgba(232,197,71,0.9),
+        0 0 28px rgba(201,162,39,0.45),
+        0 0 50px rgba(201,162,39,0.2);
+      position: relative;
+    }
+    .orb::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.35), transparent 60%);
     }
 
     .note-title {
       font-family: 'Cinzel', serif;
-      font-size: 1.85rem;
-      font-weight: 700;
-      letter-spacing: 0.25em;
-      color: #f0f0f0;
-      text-shadow: 0 0 20px rgba(201,162,39,0.4);
+      font-weight: 900;
+      font-size: 1.7rem;
+      letter-spacing: 0.28em;
+      color: #f2f2f2;
+      text-shadow: 0 0 18px rgba(201,162,39,0.35);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.6rem;
+      gap: 0.5rem;
     }
 
-    .note-title .orb {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fff8e0, #c9a227 45%, #5a4010 100%);
-      box-shadow: 0 0 18px rgba(201,162,39,0.7), 0 0 40px rgba(201,162,39,0.3);
-      flex-shrink: 0;
+    .note-title .deco {
+      font-size: 0.9rem;
+      color: var(--gold);
+      opacity: 0.7;
     }
 
-    .note-subtitle {
-      font-size: 0.75rem;
-      color: var(--muted);
-      letter-spacing: 0.15em;
-      margin-top: 0.35rem;
+    .note-sub {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      color: #888;
+      margin-top: 0.3rem;
       text-transform: uppercase;
     }
 
@@ -207,386 +219,387 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.85rem;
+      margin-top: 0.3rem;
     }
 
     .rules li {
-      font-size: 0.92rem;
-      line-height: 1.55;
-      color: #d4d4d4;
-      padding-left: 1.1rem;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: #d0d0d0;
+      padding-left: 1rem;
       position: relative;
     }
-
     .rules li::before {
       content: '•';
       position: absolute;
       left: 0;
-      color: var(--accent);
-      font-size: 1.1rem;
+      color: var(--gold);
+      font-size: 1rem;
+      top: -1px;
     }
-
     .rules li strong {
       color: #fff;
       font-weight: 400;
     }
 
-    .vertical-jp {
+    /* Vertical JP text */
+    .jp-text {
       position: absolute;
-      right: -1.8rem;
+      right: -1.6rem;
       top: 50%;
       transform: translateY(-50%);
       writing-mode: vertical-rl;
-      font-family: 'Cinzel', serif;
+      font-family: 'Noto Sans JP', 'Cinzel', serif;
       font-size: 0.95rem;
-      letter-spacing: 0.35em;
-      color: rgba(255,255,255,0.18);
+      letter-spacing: 0.4em;
+      color: rgba(255,255,255,0.16);
       pointer-events: none;
       user-select: none;
+      white-space: nowrap;
     }
 
-    @media (max-width: 980px) {
-      .vertical-jp { display: none; }
+    /* ========== RIGHT PROFILE PANEL ========== */
+    .side {
+      background: linear-gradient(165deg, #0a0a0a, #111);
+      border: 1px solid #222;
+      border-radius: 4px;
+      padding: 1.2rem 1.1rem 1.4rem;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
     }
 
-    /* Right profile panel */
-    .profile-panel {
-      background: linear-gradient(165deg, #0c0c0c, #141414);
-      border: 1px solid #2a2a2a;
-      border-radius: 6px;
-      padding: 1.4rem 1.25rem 1.6rem;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.55);
-    }
-
-    .profile-panel h2 {
+    .side-title {
       font-family: 'Cinzel', serif;
-      font-size: 1.05rem;
-      letter-spacing: 0.12em;
-      color: var(--accent);
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      color: #ddd;
       margin-bottom: 0.35rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.45rem;
     }
-
-    .profile-panel h2 .dot {
-      width: 8px;
-      height: 8px;
-      background: var(--accent);
+    .side-title .dot {
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
-      box-shadow: 0 0 8px var(--accent);
+      background: var(--gold);
+      box-shadow: 0 0 6px var(--gold);
     }
 
-    .profile-desc {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-bottom: 1.1rem;
+    .side-desc {
+      font-size: 0.75rem;
+      color: #666;
       line-height: 1.4;
+      margin-bottom: 1.1rem;
     }
 
-    .stat-block {
-      margin-bottom: 1.15rem;
-    }
-
-    .stat-label {
+    .edit-link {
+      display: inline-block;
       font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-      margin-bottom: 0.45rem;
+      color: #888;
+      text-decoration: none;
+      margin-bottom: 1.1rem;
+      border-bottom: 1px solid #333;
+      padding-bottom: 1px;
     }
+    .edit-link:hover { color: var(--gold); border-color: var(--gold); }
 
-    .stat-row {
+    .section-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #666;
+      margin-bottom: 0.45rem;
+      margin-top: 0.9rem;
+    }
+    .section-label:first-of-type { margin-top: 0; }
+
+    .awards {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.45rem;
+      gap: 0.4rem;
       align-items: center;
     }
 
-    .badge {
+    .award {
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
-      background: #1a1a1a;
-      border: 1px solid #333;
-      padding: 0.28rem 0.55rem;
-      border-radius: 4px;
-      font-size: 0.78rem;
-      color: #ccc;
+      justify-content: center;
+      min-width: 28px;
+      height: 24px;
+      padding: 0 0.4rem;
+      background: #151515;
+      border: 1px solid #2a2a2a;
+      border-radius: 3px;
+      font-size: 0.75rem;
+      color: #bbb;
     }
-
-    .badge.gold {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(201,162,39,0.08);
+    .award.gold {
+      border-color: #8a6d1a;
+      color: var(--gold);
+      background: rgba(201,162,39,0.07);
     }
-
-    .badge.num {
+    .award.num {
       font-family: 'Share Tech Mono', monospace;
       font-weight: 700;
+      color: #eee;
     }
 
-    .info-list {
+    .stats {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.55rem;
-      margin-top: 0.3rem;
+      gap: 0.4rem;
     }
-
-    .info-list li {
+    .stats li {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      font-size: 0.85rem;
-      border-bottom: 1px solid #222;
-      padding-bottom: 0.35rem;
+      font-size: 0.82rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 1px solid #1a1a1a;
     }
-
-    .info-list li span:first-child {
-      color: var(--muted);
-    }
-
-    .info-list li span:last-child {
-      color: #e0e0e0;
+    .stats li span:first-child { color: #777; }
+    .stats li span:last-child {
       font-family: 'Share Tech Mono', monospace;
+      color: #ddd;
     }
 
-    .links {
+    .contact-links {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      margin-top: 1rem;
+      gap: 0.4rem;
+      margin-top: 0.3rem;
     }
-
-    .links a {
+    .contact-links a {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.55rem;
       text-decoration: none;
-      color: #ddd;
-      font-size: 0.88rem;
-      padding: 0.55rem 0.7rem;
-      background: #151515;
-      border: 1px solid #2a2a2a;
-      border-radius: 4px;
-      transition: border-color 0.2s, background 0.2s, color 0.2s;
+      color: #ccc;
+      font-size: 0.82rem;
+      padding: 0.5rem 0.6rem;
+      background: #121212;
+      border: 1px solid #252525;
+      border-radius: 3px;
+      transition: 0.18s;
     }
-
-    .links a:hover {
-      border-color: var(--accent);
-      background: rgba(201,162,39,0.08);
-      color: var(--accent);
+    .contact-links a:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(201,162,39,0.06);
     }
-
-    .links a .ico {
-      width: 18px;
+    .contact-links .ico {
+      width: 16px;
       text-align: center;
-      opacity: 0.85;
+      opacity: 0.8;
+      font-size: 0.9rem;
     }
 
-    /* Portfolio mini cards under note */
+    /* ========== PORTFOLIO ========== */
     .portfolio {
-      grid-column: 1 / 3;
-      margin-top: 0.5rem;
+      grid-column: 1 / -1;
+      margin-top: 0.4rem;
     }
-
-    @media (max-width: 980px) {
-      .portfolio { grid-column: 1; }
-    }
-
     .portfolio h3 {
       font-family: 'Cinzel', serif;
-      font-size: 0.95rem;
-      letter-spacing: 0.15em;
-      color: var(--accent);
-      margin-bottom: 0.85rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.16em;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
       text-transform: uppercase;
     }
-
     .cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0.75rem;
+      gap: 0.7rem;
     }
-
-    @media (max-width: 640px) {
-      .cards { grid-template-columns: 1fr; }
-    }
-
     .card {
-      background: #0f0f0f;
-      border: 1px solid #2a2a2a;
-      border-radius: 4px;
-      padding: 0.9rem 0.85rem;
-      transition: border-color 0.2s, transform 0.2s;
+      background: #0c0c0c;
+      border: 1px solid #222;
+      border-radius: 3px;
+      padding: 0.85rem 0.8rem;
+      transition: 0.2s;
     }
-
     .card:hover {
-      border-color: var(--accent);
+      border-color: #4a3a12;
       transform: translateY(-2px);
     }
-
     .card .tag {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      margin-bottom: 0.35rem;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
     }
-
     .card h4 {
-      font-size: 0.95rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.92rem;
       color: #eee;
       margin-bottom: 0.25rem;
-      font-family: 'Cinzel', serif;
     }
-
     .card p {
-      font-size: 0.78rem;
-      color: var(--muted);
+      font-size: 0.76rem;
+      color: #777;
       line-height: 1.4;
     }
 
-    /* Footer */
     footer {
       text-align: center;
-      padding: 1.5rem 1rem 2rem;
-      font-size: 0.75rem;
-      color: #555;
+      padding: 1.2rem 1rem 1.8rem;
+      font-size: 0.7rem;
+      color: #444;
+      letter-spacing: 0.04em;
       position: relative;
-      z-index: 2;
-      letter-spacing: 0.05em;
+      z-index: 10;
+    }
+    footer a { color: #666; text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 920px) {
+      .seahorse { display: none; }
+      .wrapper {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        gap: 1.25rem;
+      }
+      .jp-text { display: none; }
+      .cards { grid-template-columns: 1fr; }
     }
 
-    footer a {
-      color: var(--muted);
-      text-decoration: none;
+    @media (max-width: 480px) {
+      .wrapper { padding: 1rem 0.75rem 2rem; }
+      .note { padding: 1.2rem 0.9rem 1.4rem; }
+      .note-title { font-size: 1.35rem; letter-spacing: 0.18em; }
+      .rules li { font-size: 0.82rem; }
+      .user-avatar { width: 40px; height: 40px; }
     }
-    footer a:hover { color: var(--accent); }
-
-    /* Decorative corners on note */
-    .corner {
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      border-color: var(--accent);
-      opacity: 0.5;
-    }
-    .corner.tl { top: 6px; left: 6px; border-top: 1px solid; border-left: 1px solid; }
-    .corner.tr { top: 6px; right: 6px; border-top: 1px solid; border-right: 1px solid; }
-    .corner.bl { bottom: 6px; left: 6px; border-bottom: 1px solid; border-left: 1px solid; }
-    .corner.br { bottom: 6px; right: 6px; border-bottom: 1px solid; border-right: 1px solid; }
   </style>
 </head>
 <body>
 
-  <!-- Seahorses (SVG) -->
-  <svg class="seahorse left" viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M70 20c-8-12-28-8-32 8-3 12 4 22 12 28 6 4 8 12 4 20-6 12-22 14-28 4-4-6 0-16 8-18 4-1 6-6 3-10-4-6-14-4-16 4-4 16 10 32 28 36 14 3 24 16 20 30-3 12-16 18-28 12-6-3-12 2-10 8 4 14 24 20 38 10 18-12 22-36 12-54-6-10-4-22 6-28 12-8 16-24 8-36-6-10-18-14-28-6z" fill="#f5f5f5" opacity="0.9"/>
-    <path d="M62 48c2 0 4 2 4 4s-2 4-4 4-4-2-4-4 2-4 4-4z" fill="#111"/>
-    <path d="M48 95c-2 8 2 18 12 22 8 3 14 12 10 22-2 6-10 8-16 4" stroke="#f5f5f5" stroke-width="3" fill="none" opacity="0.7"/>
-    <path d="M55 140c4 10 16 16 26 10 8-4 10-16 4-24" stroke="#f5f5f5" stroke-width="2.5" fill="none" opacity="0.6"/>
+  <!-- Detailed Seahorse SVGs matching the illustration style -->
+  <svg class="seahorse left" viewBox="0 0 140 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- Body outline - detailed line art -->
+    <path d="M78 18c-6-10-22-14-32-6-12 9-10 28 2 38 8 7 10 18 4 28-8 14-26 18-36 6-5-6-2-18 8-22 5-2 8-8 4-13-5-7-16-5-20 4-6 14 4 32 22 40 12 5 22 18 18 32-3 12-16 20-30 14-7-3-14 3-11 10 5 12 22 20 38 12 20-10 28-32 18-52-6-12-2-24 10-30 14-8 20-26 10-40-7-10-18-15-29-7z" fill="#f0f0f0"/>
+    <!-- Head detail -->
+    <path d="M52 42c3 0 5 3 5 6s-2 6-5 6-5-3-5-6 2-6 5-6z" fill="#111"/>
+    <path d="M48 28c4-2 10-1 12 4" stroke="#f0f0f0" stroke-width="2.5" fill="none"/>
+    <!-- Snout -->
+    <path d="M42 48c-6 2-10 8-8 14 1 4 6 6 10 4" stroke="#f0f0f0" stroke-width="2.2" fill="none"/>
+    <!-- Belly segments -->
+    <path d="M58 78c-4 6-2 14 4 18" stroke="#ddd" stroke-width="1.8" fill="none" opacity="0.7"/>
+    <path d="M62 98c-3 7 0 14 6 18" stroke="#ddd" stroke-width="1.8" fill="none" opacity="0.7"/>
+    <path d="M66 118c-2 6 2 12 8 14" stroke="#ddd" stroke-width="1.6" fill="none" opacity="0.6"/>
+    <!-- Tail curl -->
+    <path d="M72 145c6 12 20 18 32 10 10-6 12-20 4-30-4-5-12-6-18-2" stroke="#f0f0f0" stroke-width="3" fill="none"/>
+    <path d="M88 160c4 8 14 10 20 4" stroke="#f0f0f0" stroke-width="2.2" fill="none" opacity="0.8"/>
+    <!-- Fin -->
+    <path d="M70 55c8-4 16 2 14 12-1 6-8 8-12 4" stroke="#f0f0f0" stroke-width="2" fill="none" opacity="0.85"/>
+    <path d="M74 70c6 2 10 10 6 16" stroke="#eee" stroke-width="1.6" fill="none" opacity="0.6"/>
   </svg>
 
-  <svg class="seahorse right" viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M70 20c-8-12-28-8-32 8-3 12 4 22 12 28 6 4 8 12 4 20-6 12-22 14-28 4-4-6 0-16 8-18 4-1 6-6 3-10-4-6-14-4-16 4-4 16 10 32 28 36 14 3 24 16 20 30-3 12-16 18-28 12-6-3-12 2-10 8 4 14 24 20 38 10 18-12 22-36 12-54-6-10-4-22 6-28 12-8 16-24 8-36-6-10-18-14-28-6z" fill="#f5f5f5" opacity="0.9"/>
-    <path d="M62 48c2 0 4 2 4 4s-2 4-4 4-4-2-4-4 2-4 4-4z" fill="#111"/>
-    <path d="M48 95c-2 8 2 18 12 22 8 3 14 12 10 22-2 6-10 8-16 4" stroke="#f5f5f5" stroke-width="3" fill="none" opacity="0.7"/>
-    <path d="M55 140c4 10 16 16 26 10 8-4 10-16 4-24" stroke="#f5f5f5" stroke-width="2.5" fill="none" opacity="0.6"/>
+  <svg class="seahorse right" viewBox="0 0 140 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M78 18c-6-10-22-14-32-6-12 9-10 28 2 38 8 7 10 18 4 28-8 14-26 18-36 6-5-6-2-18 8-22 5-2 8-8 4-13-5-7-16-5-20 4-6 14 4 32 22 40 12 5 22 18 18 32-3 12-16 20-30 14-7-3-14 3-11 10 5 12 22 20 38 12 20-10 28-32 18-52-6-12-2-24 10-30 14-8 20-26 10-40-7-10-18-15-29-7z" fill="#f0f0f0"/>
+    <path d="M52 42c3 0 5 3 5 6s-2 6-5 6-5-3-5-6 2-6 5-6z" fill="#111"/>
+    <path d="M48 28c4-2 10-1 12 4" stroke="#f0f0f0" stroke-width="2.5" fill="none"/>
+    <path d="M42 48c-6 2-10 8-8 14 1 4 6 6 10 4" stroke="#f0f0f0" stroke-width="2.2" fill="none"/>
+    <path d="M58 78c-4 6-2 14 4 18" stroke="#ddd" stroke-width="1.8" fill="none" opacity="0.7"/>
+    <path d="M62 98c-3 7 0 14 6 18" stroke="#ddd" stroke-width="1.8" fill="none" opacity="0.7"/>
+    <path d="M66 118c-2 6 2 12 8 14" stroke="#ddd" stroke-width="1.6" fill="none" opacity="0.6"/>
+    <path d="M72 145c6 12 20 18 32 10 10-6 12-20 4-30-4-5-12-6-18-2" stroke="#f0f0f0" stroke-width="3" fill="none"/>
+    <path d="M88 160c4 8 14 10 20 4" stroke="#f0f0f0" stroke-width="2.2" fill="none" opacity="0.8"/>
+    <path d="M70 55c8-4 16 2 14 12-1 6-8 8-12 4" stroke="#f0f0f0" stroke-width="2" fill="none" opacity="0.85"/>
+    <path d="M74 70c6 2 10 10 6 16" stroke="#eee" stroke-width="1.6" fill="none" opacity="0.6"/>
   </svg>
 
-  <div class="page">
+  <div class="wrapper">
 
-    <!-- Top -->
-    <div class="top-bar">
-      <div class="brand">
-        <img class="avatar" src="profile.jpg" alt="ParSa 2Ki" />
-        <div class="brand-text">ParSa <span>2Ki</span></div>
+    <!-- TOP -->
+    <div class="top-row">
+      <div class="user-info">
+        <img class="user-avatar" src="profile.jpg" alt="ParSa 2Ki" />
+        <div class="user-name">ParSa <span>2Ki</span></div>
       </div>
-      <div class="level-badge">
-        Level <span class="lvl">12</span>
-      </div>
+      <div class="level">Level <b>12</b></div>
     </div>
 
-    <!-- Death Note style center -->
-    <div class="note-panel">
-      <div class="corner tl"></div>
-      <div class="corner tr"></div>
-      <div class="corner bl"></div>
-      <div class="corner br"></div>
-
-      <div class="note-header">
-        <div class="note-title">
-          <span class="orb"></span>
-          DEATH NOTE
+    <!-- DEATH NOTE -->
+    <div class="note">
+      <div class="note-inner">
+        <div class="note-header">
+          <div class="orb"></div>
+          <div class="note-title">
+            <span class="deco">✦</span>
+            DEATH NOTE
+            <span class="deco">✦</span>
+          </div>
+          <div class="note-sub">How to use it</div>
         </div>
-        <div class="note-subtitle">How to use it · ParSa Edition</div>
-      </div>
 
-      <ul class="rules">
-        <li>The human whose name is written in this note <strong>will die</strong>.</li>
-        <li>This note will not take effect unless the writer has the person's face in their mind when writing the name. Therefore, people sharing the same name will not be affected.</li>
-        <li>If the cause of death is written within <strong>40 seconds</strong> of writing the person's name, it will happen.</li>
-        <li>If the cause of death is not specified, the person will simply die of a heart attack.</li>
-        <li>After writing the cause of death, details of the death should be written in the next <strong>6 minutes and 40 seconds</strong>.</li>
-        <li><strong>ParSa 2Ki</strong> — Programmer · Lua, Python, CSS, HTML · ~5 years experience · +90 successful projects · Based in Khuzestan.</li>
-      </ul>
-
-      <div class="vertical-jp">死神のノート</div>
-    </div>
-
-    <!-- Right profile -->
-    <aside class="profile-panel">
-      <h2><span class="dot"></span> Profile</h2>
-      <p class="profile-desc">You can display one of your titles here. Edit your profile on the settings page.</p>
-
-      <div class="stat-block">
-        <div class="stat-label">Profile Awards</div>
-        <div class="stat-row">
-          <span class="badge gold">★</span>
-          <span class="badge gold">◆</span>
-          <span class="badge">25+</span>
-          <span class="badge">N</span>
-          <span class="badge">R</span>
-        </div>
-      </div>
-
-      <div class="stat-block">
-        <div class="stat-label">Stats</div>
-        <ul class="info-list">
-          <li><span>Projects</span><span>90+</span></li>
-          <li><span>Experience</span><span>5 years</span></li>
-          <li><span>Languages</span><span>Lua · Python · CSS · HTML</span></li>
-          <li><span>Location</span><span>Khuzestan</span></li>
-          <li><span>Role</span><span>Programmer</span></li>
+        <ul class="rules">
+          <li>The human whose name is written in this note <strong>will die</strong>.</li>
+          <li>This note will not take effect unless the writer has the person's face in their mind when writing the name. Therefore, people sharing the same name will not be affected.</li>
+          <li>If the cause of death is written within <strong>40 seconds</strong> of writing the person's name, it will happen.</li>
+          <li>If the cause of death is not specified, the person will simply die of a heart attack.</li>
+          <li>After writing the cause of death, details of the death should be written in the next <strong>6 minutes and 40 seconds</strong>.</li>
+          <li><strong>ParSa 2Ki</strong> — Programmer · Lua · Python · CSS · HTML · 5 years · 90+ projects · Khuzestan</li>
         </ul>
       </div>
+      <div class="jp-text">死神のノート</div>
+    </div>
 
-      <div class="stat-block">
-        <div class="stat-label">Online</div>
-        <div class="links">
-          <a href="https://t.me/ConnectedErroR" target="_blank" rel="noopener">
-            <span class="ico">✈</span> Telegram · @ConnectedErroR
-          </a>
-          <a href="https://www.instagram.com/ParSa.2Ki" target="_blank" rel="noopener">
-            <span class="ico">◎</span> Instagram · @PARSA_2KI
-          </a>
-          <a href="https://t.me/ConnectedErroR" target="_blank" rel="noopener">
-            <span class="ico">◆</span> Channel · JusticTM
-          </a>
-        </div>
+    <!-- RIGHT SIDE -->
+    <aside class="side">
+      <div class="side-title"><span class="dot"></span> Profile</div>
+      <p class="side-desc">You can display one of your titles here. Choose it on the profile editing page.</p>
+      <a href="#" class="edit-link">Edit profile</a>
+
+      <div class="section-label">Profile Awards</div>
+      <div class="awards">
+        <span class="award gold">★</span>
+        <span class="award gold">◆</span>
+        <span class="award gold">●</span>
+        <span class="award">▣</span>
+        <span class="award num">25+</span>
+        <span class="award">N</span>
+        <span class="award">R</span>
+      </div>
+
+      <div class="section-label">Stats</div>
+      <ul class="stats">
+        <li><span>Projects</span><span>90+</span></li>
+        <li><span>Experience</span><span>5 yrs</span></li>
+        <li><span>Languages</span><span>4</span></li>
+        <li><span>Games / Mods</span><span>45</span></li>
+        <li><span>Workshop</span><span>2</span></li>
+        <li><span>Guides</span><span>12</span></li>
+        <li><span>Groups</span><span>3</span></li>
+      </ul>
+
+      <div class="section-label">Online</div>
+      <div class="contact-links">
+        <a href="https://t.me/ConnectedErroR" target="_blank" rel="noopener">
+          <span class="ico">✈</span> @ConnectedErroR
+        </a>
+        <a href="https://www.instagram.com/ParSa.2Ki" target="_blank" rel="noopener">
+          <span class="ico">◎</span> @PARSA_2KI
+        </a>
+        <a href="https://t.me/ConnectedErroR" target="_blank" rel="noopener">
+          <span class="ico">◆</span> JusticTM Channel
+        </a>
       </div>
     </aside>
 
-    <!-- Portfolio -->
+    <!-- PORTFOLIO -->
     <section class="portfolio">
       <h3>Portfolio</h3>
       <div class="cards">
         <div class="card">
           <div class="tag">Game Mode</div>
           <h4>MTA Server Gamemode</h4>
-          <p>Custom gamemode design and development for Multi Theft Auto servers.</p>
+          <p>Custom gamemode design & development for Multi Theft Auto servers.</p>
         </div>
         <div class="card">
           <div class="tag">Launcher</div>
@@ -596,7 +609,7 @@
         <div class="card">
           <div class="tag">Tools</div>
           <h4>Family Tools</h4>
-          <p>Utility application designed for Rockstar-based roleplay servers.</p>
+          <p>Utility application for Rockstar-based roleplay servers.</p>
         </div>
       </div>
     </section>
@@ -604,7 +617,7 @@
   </div>
 
   <footer>
-    ParSa 2Ki · Death Note UI · Data from <a href="https://parsa2ki.github.io">parsa2ki.github.io</a>
+    ParSa 2Ki · UI inspired by the uploaded design · Data from <a href="https://parsa2ki.github.io">parsa2ki.github.io</a>
   </footer>
 
 </body>
